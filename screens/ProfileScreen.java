@@ -1,6 +1,9 @@
 package screens;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import utilities.CircularImagePanel;
@@ -27,16 +30,30 @@ public class ProfileScreen extends JPanel {
 
         // ----- Round Profile Picture -----
 
-        CircularImagePanel profilePic = new CircularImagePanel("/screens/doctorProfile.jpg", 150);
-        profilePic.setAlignmentX(Component.CENTER_ALIGNMENT);
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File("D:\\Java\\MedicalAssistant\\screens\\doctorProfile.jpg"));
+            System.out.println("Image loaded successfully!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        mainPanel.add(Box.createVerticalStrut(30));
+        CircularImagePanel profileImage = new CircularImagePanel(img);
+
+        // center it in the layout
+        JPanel imageWrapper = new JPanel();
+        imageWrapper.setOpaque(false);
+        imageWrapper.add(profileImage);
+
+        mainPanel.add(imageWrapper, BorderLayout.NORTH);
+
+        mainPanel.add(Box.createVerticalStrut(10));
 
         // ----- Doctor Details Panel -----
         JPanel detailsPanel = new JPanel(new GridBagLayout());
         detailsPanel.setOpaque(false);
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.insets = new Insets(5, 10, 10, 10);
         gbc.anchor = GridBagConstraints.WEST;
 
         String[][] details = {
