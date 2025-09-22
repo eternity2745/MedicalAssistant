@@ -33,7 +33,6 @@ public class ProfileScreen extends JPanel {
         BufferedImage img = null;
         try {
             img = ImageIO.read(new File("D:\\Java\\MedicalAssistant\\screens\\doctorProfile.jpg"));
-            System.out.println("Image loaded successfully!");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -53,7 +52,7 @@ public class ProfileScreen extends JPanel {
         JPanel detailsPanel = new JPanel(new GridBagLayout());
         detailsPanel.setOpaque(false);
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 10, 10, 10);
+        gbc.insets = new Insets(5, 20, 10, 0);
         gbc.anchor = GridBagConstraints.WEST;
 
         String[][] details = {
@@ -68,13 +67,13 @@ public class ProfileScreen extends JPanel {
             gbc.gridx = 0;
             gbc.gridy = i;
             JLabel label = new JLabel(details[i][0]);
-            label.setFont(new Font("Segoe UI", Font.BOLD, 16));
+            label.setFont(new Font("Segoe UI", Font.BOLD, 25));
             label.setForeground(Color.WHITE);
             detailsPanel.add(label, gbc);
 
             gbc.gridx = 1;
             JLabel value = new JLabel(details[i][1]);
-            value.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+            value.setFont(new Font("Segoe UI", Font.PLAIN, 25));
             value.setForeground(Color.WHITE);
             detailsPanel.add(value, gbc);
         }

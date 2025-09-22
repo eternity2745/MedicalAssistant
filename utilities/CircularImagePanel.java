@@ -10,7 +10,7 @@ public class CircularImagePanel extends JPanel {
 
     public CircularImagePanel(BufferedImage image) {
         this.image = image;
-        setPreferredSize(new Dimension(150, 150)); // size of the circle
+        setPreferredSize(new Dimension(250, 250)); // size of the circle
         setOpaque(false);
     }
 
