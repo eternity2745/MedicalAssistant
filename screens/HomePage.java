@@ -91,6 +91,8 @@ public class HomePage extends JPanel {
         JTable table = new JTable(model);
         table.setRowHeight(25);
         table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        table.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 24));
+        table.getTableHeader().setReorderingAllowed(false);
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -102,7 +104,11 @@ public class HomePage extends JPanel {
         table.setGridColor(Color.BLACK);
         table.setPreferredScrollableViewportSize(new Dimension(600, 5));
 
-        mainPanel.add(table);
+        JScrollPane tableScroll = new JScrollPane(table);
+        tableScroll.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); 
+        tableScroll.setPreferredSize(new Dimension(600, table.getRowHeight() * Math.min(data.length, 5) + table.getTableHeader().getPreferredSize().height));
+        mainPanel.add(tableScroll);
+
         mainPanel.add(Box.createVerticalStrut(30));
 
         // ----- Quick Action Buttons -----

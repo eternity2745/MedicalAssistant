@@ -4,6 +4,7 @@ import java.awt.*; // optional custom class
 import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import utilities.CircularImagePanel;
 
 public class PatientDetailsScreen extends JPanel {
@@ -90,27 +91,52 @@ public class PatientDetailsScreen extends JPanel {
 
         // Visit History / Summary
         JLabel visitLabel = new JLabel("Visit History");
-        visitLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        visitLabel.setFont(new Font("Segoe UI", Font.BOLD, 30));
         visitLabel.setForeground(Color.WHITE);
-        visitLabel.setBorder(BorderFactory.createEmptyBorder(20, 30, 10, 0));
+        visitLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        visitLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // center horizontally
         mainPanel.add(visitLabel);
 
+        // Table data
         String[] columns = {"Date", "Reason", "Doctor"};
         String[][] data = {
+            {"2025-01-12", "Routine Checkup", "Dr. Smith"},
+            {"2025-03-05", "Blood Test", "Dr. Johnson"},
+            {"2025-05-20", "Follow-up", "Dr. Smith"},
             {"2025-01-12", "Routine Checkup", "Dr. Smith"},
             {"2025-03-05", "Blood Test", "Dr. Johnson"},
             {"2025-05-20", "Follow-up", "Dr. Smith"}
         };
 
-        JTable visitTable = new JTable(data, columns);
+        JTable visitTable = new JTable(data, columns) {
+            // Make table non-editable
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        // Center table contents
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        for (int i = 0; i < visitTable.getColumnCount(); i++) {
+            visitTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+
         visitTable.setFillsViewportHeight(true);
-        visitTable.setEnabled(false);
         visitTable.setRowHeight(30);
         visitTable.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        visitTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        visitTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 24));
+        visitTable.getTableHeader().setReorderingAllowed(false);
+
         JScrollPane tableScroll = new JScrollPane(visitTable);
-        tableScroll.setBorder(BorderFactory.createEmptyBorder(0, 30, 20, 30));
+        tableScroll.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
+
+        // Optional: dynamically size table height based on row count (max 5 rows before scrolling)
+        int tableHeight = 250;//Math.min(rowCount, maxVisibleRows) * visitTable.getRowHeight() + visitTable.getTableHeader().getPreferredSize().height;
+        tableScroll.setPreferredSize(new Dimension(visitTable.getPreferredSize().width, tableHeight));
+
         mainPanel.add(tableScroll);
+
 
         add(scrollPane, BorderLayout.CENTER);
 
