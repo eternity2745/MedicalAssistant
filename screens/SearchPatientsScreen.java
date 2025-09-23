@@ -10,11 +10,18 @@ public class SearchPatientsScreen extends JPanel {
     private JButton searchButton;
     private JList<String> resultsList;
     private DefaultListModel<String> listModel;
+    private JPanel overlayPanel;
 
     public SearchPatientsScreen() {
         setLayout(new BorderLayout());
         setOpaque(false);
         // setBackground(Color.WHITE);
+
+        overlayPanel = new JPanel();
+        overlayPanel.setLayout(new BorderLayout());
+        overlayPanel.setBackground(new Color(255, 255, 255, 230)); // semi-transparent white
+        overlayPanel.setVisible(false);
+        add(overlayPanel, BorderLayout.CENTER);
 
         // --- Top search bar ---
         JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -61,15 +68,30 @@ public class SearchPatientsScreen extends JPanel {
 
         // --- Click on list item to open PatientDetailsScreen ---
         resultsList.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) { // double-click
-                    String selected = resultsList.getSelectedValue();
-                    if (selected != null) {
-                        // open new screen with patient details
-                        // JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(SearchPatientsScreen.this);
-                        // topFrame.setContentPane(new PatientDetailsScreen(selected));
-                        // topFrame.revalidate();
-                    }
+                overlayPanel.removeAll();
+                int selectedIndex = resultsList.getSelectedIndex();
+                if ((selectedIndex != -1) && (e.getClickCount() == 2)) {
+                    // Example data for demonstration
+                    String patientName = "John Doe";
+                    String dob = "1990-05-15";
+                    String gender = "Male";
+                    String contact = "9876543210";
+                    String bloodGroup = "O+";
+
+                    PatientDetailsScreen patientDetails = new PatientDetailsScreen(
+                            patientName, dob, gender, contact, bloodGroup
+                    );
+
+                    JPanel details = new JPanel();
+                    details.add(patientDetails);
+                    overlayPanel.add(patientDetails);
+
+                    overlayPanel.setVisible(true);
+
+                    // Use your dashboard's method to switch right panel
+                    // or whatever your method is
                 }
             }
         });

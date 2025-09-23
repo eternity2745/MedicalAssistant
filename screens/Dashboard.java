@@ -86,7 +86,7 @@ public class Dashboard extends JPanel {
     }
 
     // ----- Switch screens in contentPanel -----
-    private void switchScreen(String screen) {
+    public void switchScreen(String screen) {
         contentPanel.removeAll();
         switch(screen) {
             case "Home":
@@ -101,6 +101,7 @@ public class Dashboard extends JPanel {
             case "AI Analysis":
                 showAIAnalysis();
                 break;
+            
         }
         contentPanel.revalidate();
         contentPanel.repaint();
