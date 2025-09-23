@@ -110,7 +110,7 @@ public class AIAnalysisScreen extends JPanel {
         resultArea.setEditable(false);
         resultArea.setBorder(BorderFactory.createCompoundBorder(
                 new LineBorder(new Color(150, 150, 150)),
-                BorderFactory.createEmptyBorder(0, 10, 10, 10)
+                BorderFactory.createEmptyBorder(20, 10, 10, 10)
         ));
         // resultArea.setBackground(new Color(255, 255, 255, 220));
 
