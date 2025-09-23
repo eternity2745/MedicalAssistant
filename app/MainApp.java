@@ -25,8 +25,8 @@ public class MainApp extends JFrame {
         Dashboard dashboardPanel = new Dashboard(this);
 
         // Add screens to mainPanel
-        mainPanel.add(loginPanel, "Login");
-        mainPanel.add(registerPanel, "Register");
+        // mainPanel.add(loginPanel, "Login");
+        // mainPanel.add(registerPanel, "Register");
         mainPanel.add(dashboardPanel, "Dashboard");
 
         add(mainPanel);

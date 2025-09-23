@@ -32,7 +32,7 @@ public class ProfileScreen extends JPanel {
 
         BufferedImage img = null;
         try {
-            img = ImageIO.read(new File("D:\\Java\\MedicalAssistant\\screens\\doctorProfile.jpg"));
+            img = ImageIO.read(new File("D:\\Java\\MedicalAssistant\\Resources\\Images\\doctorProfile.jpg"));
         } catch (Exception e) {
             e.printStackTrace();
         }

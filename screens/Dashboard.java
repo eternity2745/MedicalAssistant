@@ -92,7 +92,7 @@ public class Dashboard extends JPanel {
 
     private void showSearchPatients() {
         contentPanel.removeAll();
-        contentPanel.add(new ProfileScreen(), BorderLayout.CENTER);
+        contentPanel.add(new SearchPatientsScreen(), BorderLayout.CENTER);
         contentPanel.revalidate();
         contentPanel.repaint();
     }
