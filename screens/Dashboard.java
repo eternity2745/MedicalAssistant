@@ -4,6 +4,8 @@ import app.MainApp;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 import utilities.GradientPanel;
 
@@ -22,33 +24,56 @@ public class Dashboard extends JPanel {
         navPanel.setBackground(new Color(10, 25, 70));
         navPanel.setPreferredSize(new Dimension(200, getHeight()));
 
+        List<JLabel> navLabels = new ArrayList<>();
+        JLabel[] active = new JLabel[1]; // store active label
         String[] navItems = {"Home", "Search Patients", "Profile", "AI Analysis"};
+
         for (String item : navItems) {
             JLabel label = new JLabel(item);
-            label.setForeground(Color.WHITE);
+            if(item.equals("Home")) {
+                label.setForeground(Color.CYAN);
+                active[0] = label;
+            } else {
+                label.setForeground(Color.WHITE);
+            }
             label.setFont(new Font("Segoe UI", Font.PLAIN, 16));
             label.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
             label.setAlignmentX(Component.LEFT_ALIGNMENT);
+            navLabels.add(label);
 
             label.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    // Reset previous active label to white
+                    if (active[0] != null && active[0] != label) {
+                        active[0].setForeground(Color.WHITE);
+                    }
+
+                    // Set clicked label as active
+                    label.setForeground(Color.CYAN);
+                    active[0] = label;
+
                     switchScreen(item);
                 }
 
                 @Override
                 public void mouseEntered(MouseEvent e) {
-                    label.setForeground(Color.CYAN);
+                    if (label != active[0]) {
+                        label.setForeground(new Color(0, 200, 255)); // hover effect
+                    }
                 }
 
                 @Override
                 public void mouseExited(MouseEvent e) {
-                    label.setForeground(Color.WHITE);
+                    if (label != active[0]) {
+                        label.setForeground(Color.WHITE);
+                    }
                 }
             });
 
             navPanel.add(label);
         }
+
 
         add(navPanel, BorderLayout.WEST);
 
