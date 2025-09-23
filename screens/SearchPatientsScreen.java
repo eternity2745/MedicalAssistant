@@ -54,7 +54,7 @@ public class SearchPatientsScreen extends JPanel {
 
         overlayPanel = new JPanel();
         overlayPanel.setLayout(new BorderLayout());
-        overlayPanel.setBackground(new Color(255, 255, 255, 230)); // semi-transparent white
+        // overlayPanel.setBackground(new Color(255, 255, 255, 230)); // semi-transparent white
         overlayPanel.setVisible(false);
 
         // --- Search Action ---
@@ -78,21 +78,25 @@ public class SearchPatientsScreen extends JPanel {
                     String contact = "9876543210";
                     String bloodGroup = "O+";
 
-                    PatientDetailsScreen patientDetails = new PatientDetailsScreen(
-                            patientName, dob, gender, contact, bloodGroup
-                    );
-
-                    overlayPanel.add(patientDetails, BorderLayout.CENTER);
-                    overlayPanel.setVisible(true);
-                    overlayPanel.revalidate();
-                    overlayPanel.repaint();
-                    scrollPane.setVisible(false);
-                    searchPanel.setVisible(false);
-                    add(overlayPanel, BorderLayout.CENTER);
+                    changeScreen(patientName, dob, gender, contact, bloodGroup, scrollPane, searchPanel);
 
                 }
             }
         });
+    }
+
+    private void changeScreen(String patientName, String dob, String gender, String contact, String bloodGroup, JScrollPane scrollPane, JPanel searchPanel) {
+
+        PatientDetailsScreen patientDetails = new PatientDetailsScreen(
+                            patientName, dob, gender, contact, bloodGroup, scrollPane, searchPanel, this, overlayPanel
+                    );
+        overlayPanel.add(patientDetails, BorderLayout.CENTER);
+        overlayPanel.setVisible(true);
+        overlayPanel.revalidate();
+        overlayPanel.repaint();
+        scrollPane.setVisible(false);
+        searchPanel.setVisible(false);
+        add(overlayPanel, BorderLayout.CENTER);
     }
 
     // Dummy patient data (replace with SQL later)

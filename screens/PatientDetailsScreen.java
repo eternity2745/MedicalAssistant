@@ -8,9 +8,20 @@ import utilities.CircularImagePanel;
 
 public class PatientDetailsScreen extends JPanel {
 
-    public PatientDetailsScreen(String patientName, String dob, String gender, String contact, String bloodGroup) {
+    public PatientDetailsScreen(String patientName, String dob, String gender, String contact, String bloodGroup, JScrollPane scrlPane, JPanel searchPanel, JPanel searchPatients, JPanel overPanel) {
         setLayout(new BorderLayout());
         setBackground(new Color(10, 25, 70));
+
+        JPanel backBtnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        backBtnPanel.setOpaque(false); // transparent
+        JButton backButton = new JButton("← Back");
+        backButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        backBtnPanel.add(backButton);
+        JLabel backLabel = new JLabel("   Patient Details");
+        backLabel.setFont(new Font("Segoe UI", Font.BOLD, 30));
+        backLabel.setForeground(Color.WHITE);
+        backBtnPanel.add(backLabel);
+        add(backBtnPanel, BorderLayout.NORTH);
 
         // Scrollable main panel
         JPanel mainPanel = new JPanel();
@@ -102,6 +113,14 @@ public class PatientDetailsScreen extends JPanel {
         mainPanel.add(tableScroll);
 
         add(scrollPane, BorderLayout.CENTER);
+
+        backButton.addActionListener(e -> {
+            overPanel.setVisible(false);
+            searchPatients.remove(overPanel);
+            scrlPane.setVisible(true);
+            searchPanel.setVisible(true);
+            // hide overlay when back pressed
+        });
     }
 
     private JLabel createLabel(String text) {
