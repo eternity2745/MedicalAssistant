@@ -2,6 +2,7 @@ package screens;
 
 import java.awt.*; // optional custom class
 import java.io.File;
+import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -43,7 +44,7 @@ public class PatientDetailsScreen extends JPanel {
         CircularImagePanel imagePanel;
         try {
             imagePanel = new CircularImagePanel(ImageIO.read(new File("D:\\Java\\MedicalAssistant\\Resources\\Images\\doctorProfile.jpg"))); // size 120px
-        } catch (Exception e) {
+        } catch (IOException e) {
             imagePanel = new CircularImagePanel(null); // fallback if image not found
             System.err.println("Error loading image: " + e.getMessage());
         }
@@ -110,6 +111,7 @@ public class PatientDetailsScreen extends JPanel {
 
         JTable visitTable = new JTable(data, columns) {
             // Make table non-editable
+            @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }

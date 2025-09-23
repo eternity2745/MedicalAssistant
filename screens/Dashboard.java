@@ -89,18 +89,10 @@ public class Dashboard extends JPanel {
     public void switchScreen(String screen) {
         contentPanel.removeAll();
         switch(screen) {
-            case "Home":
-                showHome();
-                break;
-            case "Search Patients":
-                showSearchPatients();
-                break;
-            case "Profile":
-                showProfile();
-                break;
-            case "AI Analysis":
-                showAIAnalysis();
-                break;
+            case "Home" -> showHome();
+            case "Search Patients" -> showSearchPatients();
+            case "Profile" -> showProfile();
+            case "AI Analysis" -> showAIAnalysis();
             
         }
         contentPanel.revalidate();
@@ -131,9 +123,10 @@ public class Dashboard extends JPanel {
     }
 
     private void showAIAnalysis() {
-        JLabel label = new JLabel("AI Disease Analysis / Summarizer", SwingConstants.CENTER);
-        label.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        contentPanel.add(label, BorderLayout.CENTER);
+        contentPanel.removeAll();
+        contentPanel.add(new AIAnalysisScreen(), BorderLayout.CENTER);
+        contentPanel.revalidate();
+        contentPanel.repaint();
     }
 
     @Override
