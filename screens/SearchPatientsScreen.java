@@ -17,12 +17,6 @@ public class SearchPatientsScreen extends JPanel {
         setOpaque(false);
         // setBackground(Color.WHITE);
 
-        overlayPanel = new JPanel();
-        overlayPanel.setLayout(new BorderLayout());
-        overlayPanel.setBackground(new Color(255, 255, 255, 230)); // semi-transparent white
-        overlayPanel.setVisible(false);
-        add(overlayPanel, BorderLayout.CENTER);
-
         // --- Top search bar ---
         JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel searchLabel = new JLabel("Search Patient:");
@@ -58,6 +52,11 @@ public class SearchPatientsScreen extends JPanel {
         // --- Dummy Data (replace later with DB query) ---
         addDummyData();
 
+        overlayPanel = new JPanel();
+        overlayPanel.setLayout(new BorderLayout());
+        overlayPanel.setBackground(new Color(255, 255, 255, 230)); // semi-transparent white
+        overlayPanel.setVisible(false);
+
         // --- Search Action ---
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -65,14 +64,13 @@ public class SearchPatientsScreen extends JPanel {
                 filterResults(query);
             }
         });
-
         // --- Click on list item to open PatientDetailsScreen ---
         resultsList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                overlayPanel.removeAll();
                 int selectedIndex = resultsList.getSelectedIndex();
                 if ((selectedIndex != -1) && (e.getClickCount() == 2)) {
+                    overlayPanel.removeAll();
                     // Example data for demonstration
                     String patientName = "John Doe";
                     String dob = "1990-05-15";
@@ -84,14 +82,14 @@ public class SearchPatientsScreen extends JPanel {
                             patientName, dob, gender, contact, bloodGroup
                     );
 
-                    JPanel details = new JPanel();
-                    details.add(patientDetails);
-                    overlayPanel.add(patientDetails);
-
+                    overlayPanel.add(patientDetails, BorderLayout.CENTER);
                     overlayPanel.setVisible(true);
+                    overlayPanel.revalidate();
+                    overlayPanel.repaint();
+                    scrollPane.setVisible(false);
+                    searchPanel.setVisible(false);
+                    add(overlayPanel, BorderLayout.CENTER);
 
-                    // Use your dashboard's method to switch right panel
-                    // or whatever your method is
                 }
             }
         });
