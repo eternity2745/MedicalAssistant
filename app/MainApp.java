@@ -8,9 +8,10 @@ import screens.Login;
 import screens.Register;
 import screens.WelcomePage;
 
+// Class for Main Starting Point of the App (Uses Card Layout To Switch Screens)
 public class MainApp extends JFrame {
 
-    private JPanel mainPanel; // container for all screens
+    private JPanel mainPanel;
     private CardLayout cardLayout;
 
     public MainApp() {
@@ -20,20 +21,17 @@ public class MainApp extends JFrame {
         } catch (Exception e) {
             
         }
-        setExtendedState(JFrame.MAXIMIZED_BOTH); // fullscreen
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // CardLayout container
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
 
-        // Screens
         WelcomePage welcomePanel = new WelcomePage(this);
         Login loginPanel = new Login(this);
         Register registerPanel = new Register(this);
         Dashboard dashboardPanel = new Dashboard(this);
 
-        // Add screens to mainPanel
         mainPanel.add(welcomePanel, "Welcome");
         mainPanel.add(loginPanel, "Login");
         mainPanel.add(registerPanel, "Register");
@@ -43,7 +41,6 @@ public class MainApp extends JFrame {
         setVisible(true);
     }
 
-    // Method to switch screens
     public void showScreen(String screenName) {
         cardLayout.show(mainPanel, screenName);
     }
