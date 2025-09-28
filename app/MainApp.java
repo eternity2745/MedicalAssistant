@@ -1,5 +1,7 @@
 package app;
 import java.awt.*;
+import java.io.File;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import screens.Dashboard;
 import screens.Login;
@@ -13,6 +15,11 @@ public class MainApp extends JFrame {
 
     public MainApp() {
         setTitle("MediGuide");
+        try {
+            setIconImage(ImageIO.read(new File("Resources\\Images\\logo.png")));
+        } catch (Exception e) {
+            
+        }
         setExtendedState(JFrame.MAXIMIZED_BOTH); // fullscreen
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

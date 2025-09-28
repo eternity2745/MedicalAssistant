@@ -14,6 +14,13 @@ public class CircularImagePanel extends JPanel {
         setOpaque(false);
     }
 
+    public CircularImagePanel(BufferedImage image, int width, int height) {
+        this.image = image;
+        setPreferredSize(new Dimension(width, height)); // size of the circle
+        // this.setAlignmentY(Component.CENTER_ALIGNMENT);
+        setOpaque(false);
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
