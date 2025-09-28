@@ -64,7 +64,7 @@ public class WelcomePage extends JPanel {
         JLabel titleLabel = new JLabel("MediGuide AI");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 90));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        titleLabel.setForeground(new Color(0x0056A6));
+        titleLabel.setForeground(Color.cyan);
         // header.add(titleLabel);
 
         // Description
