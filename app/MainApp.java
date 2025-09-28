@@ -4,6 +4,7 @@ import javax.swing.*;
 import screens.Dashboard;
 import screens.Login;
 import screens.Register;
+import screens.WelcomeScreen;
 
 public class MainApp extends JFrame {
 
@@ -11,7 +12,7 @@ public class MainApp extends JFrame {
     private CardLayout cardLayout;
 
     public MainApp() {
-        setTitle("Medical Assistant");
+        setTitle("MediGuide");
         setExtendedState(JFrame.MAXIMIZED_BOTH); // fullscreen
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -20,13 +21,15 @@ public class MainApp extends JFrame {
         mainPanel = new JPanel(cardLayout);
 
         // Screens
+        WelcomeScreen welcomePanel = new WelcomeScreen(this);
         Login loginPanel = new Login(this);
         Register registerPanel = new Register(this);
         Dashboard dashboardPanel = new Dashboard(this);
 
         // Add screens to mainPanel
-        // mainPanel.add(loginPanel, "Login");
-        // mainPanel.add(registerPanel, "Register");
+        mainPanel.add(welcomePanel, "Welcome");
+        mainPanel.add(loginPanel, "Login");
+        mainPanel.add(registerPanel, "Register");
         mainPanel.add(dashboardPanel, "Dashboard");
 
         add(mainPanel);

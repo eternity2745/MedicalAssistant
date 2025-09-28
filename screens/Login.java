@@ -88,8 +88,8 @@ public class Login extends JPanel {
         String password = new String(passwordField.getPassword()).trim();
 
         // Hardcoded credentials
-        String validEmail = "doctor@example.com";
-        String validPassword = "12345";
+        String validEmail = "";
+        String validPassword = "";
 
         if(email.isEmpty() || password.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill all fields!");
