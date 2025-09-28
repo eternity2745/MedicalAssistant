@@ -2,14 +2,15 @@ package screens;
 import app.MainApp;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import org.w3c.dom.events.MouseEvent;
 import utilities.CircularImagePanel;
 
+// Class for showing the welcome page
 public class WelcomePage extends JPanel {
 
     private Image bgImage;
@@ -28,23 +29,18 @@ public class WelcomePage extends JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // Center the logo image using a wrapper panel with FlowLayout
         
 
         CircularImagePanel logoImage = new CircularImagePanel(img, 200, 200);
 
-        // center it in the layout
-        // JPanel imageWrapper = new JPanel();
-    JPanel logoWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-    logoWrapper.setOpaque(false);
-    logoWrapper.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-    logoWrapper.setAlignmentX(Component.CENTER_ALIGNMENT);
-    logoWrapper.setMaximumSize(new Dimension(logoImage.getPreferredSize().width, logoImage.getPreferredSize().height));
-    logoWrapper.setMinimumSize(new Dimension(logoImage.getPreferredSize().width, logoImage.getPreferredSize().height));
-    logoWrapper.setPreferredSize(new Dimension(logoImage.getPreferredSize().width, logoImage.getPreferredSize().height));
-    logoWrapper.add(logoImage);
-
-        // Main container with background image
+        JPanel logoWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        logoWrapper.setOpaque(false);
+        logoWrapper.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        logoWrapper.setAlignmentX(Component.CENTER_ALIGNMENT);
+        logoWrapper.setMaximumSize(new Dimension(logoImage.getPreferredSize().width, logoImage.getPreferredSize().height));
+        logoWrapper.setMinimumSize(new Dimension(logoImage.getPreferredSize().width, logoImage.getPreferredSize().height));
+        logoWrapper.setPreferredSize(new Dimension(logoImage.getPreferredSize().width, logoImage.getPreferredSize().height));
+        logoWrapper.add(logoImage);
         JPanel container = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -64,7 +60,7 @@ public class WelcomePage extends JPanel {
         JLabel titleLabel = new JLabel("MediGuide AI");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 90));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        titleLabel.setForeground(Color.cyan);
+        titleLabel.setForeground(new Color(0x0056A6));
         // header.add(titleLabel);
 
         // Description
@@ -88,27 +84,20 @@ public class WelcomePage extends JPanel {
         // bHolder.setOpaque(false);
         JButton getStartedButton = createModernButton("Get Started");
         getStartedButton.addActionListener(e -> {
-            if(e.getSource() == getStartedButton){
-
-            }
+            parent.showScreen("Login");
         });
         getStartedButton.setBorder(BorderFactory.createEmptyBorder(15, 50, 15, 50));
         getStartedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         // bHolder.add(getStartedButton);
-
-        // Add header, description, button to container
-    // Remove vertical strut above logoWrapper and between logoWrapper and titleLabel
         container.add(Box.createVerticalStrut(40));
         container.add(logoWrapper);
-        // Remove any vertical strut between logoWrapper and titleLabel
         container.add(Box.createVerticalStrut(40));
         container.add(titleLabel);
-        // container.add(Box.createVerticalStrut(30)); // keep space between title and description
+        // container.add(Box.createVerticalStrut(30));
         // container.add(description);
         container.add(Box.createVerticalStrut(20));
         container.add(getStartedButton);
 
-        // Footer
         JPanel footer = new JPanel(new BorderLayout());
         footer.setBackground(new Color(0x123456));
         footer.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -145,14 +134,10 @@ public class WelcomePage extends JPanel {
         footer.add(footerContent, BorderLayout.CENTER);
 
         
-
-        // Add container to frame center, footer at bottom
         this.setLayout(new BorderLayout());
         this.add(container, BorderLayout.CENTER);
         this.add(footer, BorderLayout.SOUTH);
 
-        // Pack or set size
-        // setSize(1200, 800); // Optionally set a size if not maximized
 
         setVisible(true);
     }
@@ -183,13 +168,13 @@ public class WelcomePage extends JPanel {
         btn.setOpaque(false);
         btn.setBorder(new EmptyBorder(10, 25, 10, 25));
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-        // Hover effect
         btn.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseEntered(MouseEvent e) {
                 btn.setForeground(Color.YELLOW);
             }
 
+            
             public void mouseExited(MouseEvent e) {
                 btn.setForeground(Color.WHITE);
             }

@@ -11,7 +11,7 @@ public class GradientPanel extends JPanel {
     public GradientPanel(Color color1, Color color2) {
         this.color1 = color1;
         this.color2 = color2;
-        setOpaque(false); // important
+        setOpaque(false);
     }
 
     @Override

@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+//Class for searching patient records Screen
 public class SearchPatientsScreen extends JPanel {
 
     private JTextField searchField;
@@ -15,9 +16,7 @@ public class SearchPatientsScreen extends JPanel {
     public SearchPatientsScreen() {
         setLayout(new BorderLayout());
         setOpaque(false);
-        // setBackground(Color.WHITE);
 
-        // --- Top search bar ---
         JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel searchLabel = new JLabel("Search Patient:");
         searchField = new JTextField();
@@ -34,7 +33,6 @@ public class SearchPatientsScreen extends JPanel {
 
         add(searchPanel, BorderLayout.NORTH);
 
-        // --- List for results ---
         listModel = new DefaultListModel<>();
         resultsList = new JList<>(listModel);
         resultsList.setBorder(BorderFactory.createEmptyBorder(10, 20, 5, 5));
@@ -49,22 +47,17 @@ public class SearchPatientsScreen extends JPanel {
         scrollPane.setOpaque(false);
         add(scrollPane, BorderLayout.CENTER);
 
-        // --- Dummy Data (replace later with DB query) ---
         addDummyData();
 
         overlayPanel = new JPanel();
         overlayPanel.setLayout(new BorderLayout());
-        // overlayPanel.setBackground(new Color(255, 255, 255, 230)); // semi-transparent white
         overlayPanel.setVisible(false);
-
-        // --- Search Action ---
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String query = searchField.getText().trim().toLowerCase();
                 filterResults(query);
             }
         });
-        // --- Click on list item to open PatientDetailsScreen ---
         resultsList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -99,7 +92,6 @@ public class SearchPatientsScreen extends JPanel {
         add(overlayPanel, BorderLayout.CENTER);
     }
 
-    // Dummy patient data (replace with SQL later)
     private void addDummyData() {
         listModel.addElement("P001 - Rahul Sharma (32, Male)");
         listModel.addElement("P002 - Anjali Verma (28, Female)");
@@ -115,7 +107,6 @@ public class SearchPatientsScreen extends JPanel {
         listModel.addElement("P004 - Neha Singh (25, Female)");
     }
 
-    // Simple filter
     private void filterResults(String query) {
         listModel.clear();
         if (query.isEmpty()) {

@@ -10,13 +10,13 @@ public class CircularImagePanel extends JPanel {
 
     public CircularImagePanel(BufferedImage image) {
         this.image = image;
-        setPreferredSize(new Dimension(250, 250)); // size of the circle
+        setPreferredSize(new Dimension(250, 250));
         setOpaque(false);
     }
 
     public CircularImagePanel(BufferedImage image, int width, int height) {
         this.image = image;
-        setPreferredSize(new Dimension(width, height)); // size of the circle
+        setPreferredSize(new Dimension(width, height));
         // this.setAlignmentY(Component.CENTER_ALIGNMENT);
         setOpaque(false);
     }
@@ -31,12 +31,10 @@ public class CircularImagePanel extends JPanel {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         if (image != null) {
-            // Scale image into a circle
             Shape circle = new Ellipse2D.Float(0, 0, diameter, diameter);
             g2.setClip(circle);
             g2.drawImage(image, 0, 0, diameter, diameter, this);
         } else {
-            // fallback white circle
             g2.setColor(Color.WHITE);
             g2.fillOval(0, 0, diameter, diameter);
         }

@@ -1,6 +1,6 @@
 package screens;
 
-import java.awt.*; // optional custom class
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import utilities.CircularImagePanel;
 
+// Class For Showing Patient Details
 public class PatientDetailsScreen extends JPanel {
 
     public PatientDetailsScreen(String patientName, String dob, String gender, String contact, String bloodGroup, JScrollPane scrlPane, JPanel searchPanel, JPanel searchPatients, JPanel overPanel) {
@@ -25,7 +26,6 @@ public class PatientDetailsScreen extends JPanel {
         backBtnPanel.add(backLabel);
         add(backBtnPanel, BorderLayout.NORTH);
 
-        // Scrollable main panel
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setOpaque(false);
@@ -34,13 +34,10 @@ public class PatientDetailsScreen extends JPanel {
         scrollPane.getVerticalScrollBar().setUnitIncrement(16); // smoother scrolling
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
-
-        // Top panel with image and basic info
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 30, 20));
         topPanel.setOpaque(false);
 
-        // Patient Image
         CircularImagePanel imagePanel;
         try {
             imagePanel = new CircularImagePanel(ImageIO.read(new File("D:\\Java\\MedicalAssistant\\Resources\\Images\\doctorProfile.jpg"))); // size 120px
@@ -50,7 +47,6 @@ public class PatientDetailsScreen extends JPanel {
         }
         topPanel.add(imagePanel);
 
-        // Basic Info
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
         infoPanel.setOpaque(false);
@@ -75,7 +71,6 @@ public class PatientDetailsScreen extends JPanel {
 
         mainPanel.add(topPanel);
 
-        // Contact & Medical Info Section
         JPanel detailsPanel = new JPanel();
         detailsPanel.setLayout(new GridLayout(0, 2, 30, 20));
         detailsPanel.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
@@ -90,7 +85,6 @@ public class PatientDetailsScreen extends JPanel {
 
         mainPanel.add(detailsPanel);
 
-        // Visit History / Summary
         JLabel visitLabel = new JLabel("Visit History");
         visitLabel.setFont(new Font("Segoe UI", Font.BOLD, 30));
         visitLabel.setForeground(Color.WHITE);
@@ -98,7 +92,6 @@ public class PatientDetailsScreen extends JPanel {
         visitLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // center horizontally
         mainPanel.add(visitLabel);
 
-        // Table data
         String[] columns = {"Date", "Reason", "Doctor"};
         String[][] data = {
             {"2025-01-12", "Routine Checkup", "Dr. Smith"},
@@ -110,14 +103,12 @@ public class PatientDetailsScreen extends JPanel {
         };
 
         JTable visitTable = new JTable(data, columns) {
-            // Make table non-editable
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
 
-        // Center table contents
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int i = 0; i < visitTable.getColumnCount(); i++) {
@@ -133,7 +124,6 @@ public class PatientDetailsScreen extends JPanel {
         JScrollPane tableScroll = new JScrollPane(visitTable);
         tableScroll.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
 
-        // Optional: dynamically size table height based on row count (max 5 rows before scrolling)
         int tableHeight = 250;//Math.min(rowCount, maxVisibleRows) * visitTable.getRowHeight() + visitTable.getTableHeader().getPreferredSize().height;
         tableScroll.setPreferredSize(new Dimension(visitTable.getPreferredSize().width, tableHeight));
 
@@ -147,7 +137,7 @@ public class PatientDetailsScreen extends JPanel {
             searchPatients.remove(overPanel);
             scrlPane.setVisible(true);
             searchPanel.setVisible(true);
-            // hide overlay when back pressed
+
         });
     }
 

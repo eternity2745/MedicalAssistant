@@ -4,6 +4,7 @@ import app.MainApp;
 import java.awt.*;
 import javax.swing.*;
 
+// Class for creating register screen
 public class Register extends JPanel {
 
     private MainApp parent;
@@ -13,7 +14,6 @@ public class Register extends JPanel {
         setLayout(new BorderLayout());
         setOpaque(false);
 
-        // ----- Register Card Panel -----
         JPanel registerPanel = new JPanel(new GridBagLayout());
         registerPanel.setOpaque(true);
         registerPanel.setBackground(new Color(255, 255, 255, 230));
@@ -26,14 +26,12 @@ public class Register extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1;
 
-        // ----- Title -----
         JLabel titleLabel = new JLabel("Register Screen", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
         titleLabel.setForeground(Color.DARK_GRAY);
         gbc.gridy = 0;
         registerPanel.add(titleLabel, gbc);
 
-        // ----- Name Label & Field -----
         JLabel nameLabel = new JLabel("Full Name");
         nameLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         gbc.gridy = 1;
@@ -44,7 +42,6 @@ public class Register extends JPanel {
         gbc.gridy = 2;
         registerPanel.add(nameField, gbc);
 
-        // ----- Email Label & Field -----
         JLabel emailLabel = new JLabel("Email");
         emailLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         gbc.gridy = 3;
@@ -55,7 +52,6 @@ public class Register extends JPanel {
         gbc.gridy = 4;
         registerPanel.add(emailField, gbc);
 
-        // ----- Password Label & Field -----
         JLabel passwordLabel = new JLabel("Password");
         passwordLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         gbc.gridy = 5;
@@ -66,7 +62,6 @@ public class Register extends JPanel {
         gbc.gridy = 6;
         registerPanel.add(passwordField, gbc);
 
-        // ----- Confirm Password Label & Field -----
         JLabel confirmLabel = new JLabel("Confirm Password");
         confirmLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         gbc.gridy = 7;
@@ -77,7 +72,6 @@ public class Register extends JPanel {
         gbc.gridy = 8;
         registerPanel.add(confirmField, gbc);
 
-        // ----- Buttons -----
         JButton registerBtn = new JButton("Register");
         registerBtn.setFont(new Font("Segoe UI", Font.BOLD, 16));
         gbc.gridy = 9;
@@ -90,14 +84,12 @@ public class Register extends JPanel {
         gbc.gridy = 10;
         registerPanel.add(backBtn, gbc);
 
-        // ----- Add registerPanel to container for centering -----
         JPanel container = new JPanel(new GridBagLayout());
         container.setOpaque(false);
         container.add(registerPanel);
 
         add(container, BorderLayout.CENTER);
 
-        // ----- Button Actions -----
         registerBtn.addActionListener(e -> {
         String name = nameField.getText().trim();
         String email = emailField.getText().trim();
@@ -124,7 +116,6 @@ public class Register extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // Gradient background
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         GradientPaint gp = new GradientPaint(0, 0, new Color(10, 25, 70),

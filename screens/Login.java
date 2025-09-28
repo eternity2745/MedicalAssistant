@@ -4,6 +4,8 @@ import app.MainApp;
 import java.awt.*;
 import javax.swing.*;
 
+
+// Class For Login Page
 public class Login extends JPanel {
 
     private MainApp parent;
@@ -26,42 +28,36 @@ public class Login extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1;
 
-        // ----- Title -----
         JLabel titleLabel = new JLabel("Login Screen", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
         titleLabel.setForeground(Color.DARK_GRAY);
         gbc.gridy = 0;
         loginPanel.add(titleLabel, gbc);
 
-        // ----- Email Label -----
         JLabel emailLabel = new JLabel("Email");
         emailLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         emailLabel.setForeground(Color.DARK_GRAY);
         gbc.gridy = 1;
         loginPanel.add(emailLabel, gbc);
 
-        // ----- Email Field -----
         JTextField emailField = new JTextField();
         emailField.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         emailField.setPreferredSize(new Dimension(200, 30));
         gbc.gridy = 2;
         loginPanel.add(emailField, gbc);
 
-        // ----- Password Label -----
         JLabel passwordLabel = new JLabel("Password");
         passwordLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         passwordLabel.setForeground(Color.DARK_GRAY);
         gbc.gridy = 3;
         loginPanel.add(passwordLabel, gbc);
 
-        // ----- Password Field -----
         JPasswordField passwordField = new JPasswordField();
         passwordField.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         passwordField.setPreferredSize(new Dimension(200, 30));
         gbc.gridy = 4;
         loginPanel.add(passwordField, gbc);
 
-        // ----- Login Button -----
         JButton loginBtn = new JButton("Login");
         loginBtn.setFont(new Font("Segoe UI", Font.BOLD, 16));
         gbc.gridy = 5;
@@ -69,25 +65,21 @@ public class Login extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
         loginPanel.add(loginBtn, gbc);
 
-        // ----- Register Button -----
         JButton registerBtn = new JButton("Register");
         registerBtn.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         gbc.gridy = 6;
         loginPanel.add(registerBtn, gbc);
 
-        // ----- Add loginPanel to container for centering -----
         JPanel container = new JPanel(new GridBagLayout());
         container.setOpaque(false);
         container.add(loginPanel);
 
         add(container, BorderLayout.CENTER);
 
-        // ----- Button Actions -----
         loginBtn.addActionListener(e -> {
         String email = emailField.getText().trim();
         String password = new String(passwordField.getPassword()).trim();
 
-        // Hardcoded credentials
         String validEmail = "";
         String validPassword = "";
 
@@ -109,7 +101,6 @@ public class Login extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // Gradient background
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         GradientPaint gp = new GradientPaint(0, 0, new Color(10, 25, 70),

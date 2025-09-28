@@ -8,19 +8,18 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import utilities.CircularImagePanel;
 
+//Class for showing Profile Of Doctor
 public class ProfileScreen extends JPanel {
 
     public ProfileScreen() {
         setLayout(new BorderLayout());
-        setOpaque(false); // transparent to show gradient
+        setOpaque(false);
 
-        // Main panel with BoxLayout
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setOpaque(false);
         mainPanel.setBorder(new EmptyBorder(30, 30, 30, 30));
 
-        // ----- Title -----
         JLabel title = new JLabel("Doctor Profile");
         title.setFont(new Font("Segoe UI", Font.BOLD, 28));
         title.setForeground(Color.WHITE);
@@ -28,7 +27,6 @@ public class ProfileScreen extends JPanel {
         mainPanel.add(title);
         mainPanel.add(Box.createVerticalStrut(40));
 
-        // ----- Round Profile Picture -----
 
         BufferedImage img = null;
         try {
@@ -39,7 +37,6 @@ public class ProfileScreen extends JPanel {
 
         CircularImagePanel profileImage = new CircularImagePanel(img);
 
-        // center it in the layout
         JPanel imageWrapper = new JPanel();
         imageWrapper.setOpaque(false);
         imageWrapper.add(profileImage);
@@ -48,7 +45,6 @@ public class ProfileScreen extends JPanel {
 
         mainPanel.add(Box.createVerticalStrut(10));
 
-        // ----- Doctor Details Panel -----
         JPanel detailsPanel = new JPanel(new GridBagLayout());
         detailsPanel.setOpaque(false);
         GridBagConstraints gbc = new GridBagConstraints();
@@ -81,7 +77,6 @@ public class ProfileScreen extends JPanel {
         mainPanel.add(detailsPanel);
         mainPanel.add(Box.createVerticalStrut(20));
 
-        // ----- Action Buttons -----
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 0));
         buttonPanel.setOpaque(false);
 
@@ -92,9 +87,8 @@ public class ProfileScreen extends JPanel {
         buttonPanel.add(changePasswordBtn);
 
         mainPanel.add(buttonPanel);
-        mainPanel.add(Box.createVerticalGlue()); // pushes content slightly up for scroll
+        mainPanel.add(Box.createVerticalGlue());
 
-        // ----- Scrollable container -----
         JScrollPane scrollPane = new JScrollPane(mainPanel);
         scrollPane.setBorder(null);
         scrollPane.setOpaque(false);
