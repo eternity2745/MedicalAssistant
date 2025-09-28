@@ -4,7 +4,7 @@ import javax.swing.*;
 import screens.Dashboard;
 import screens.Login;
 import screens.Register;
-import screens.WelcomeScreen;
+import screens.WelcomePage;
 
 public class MainApp extends JFrame {
 
@@ -21,7 +21,7 @@ public class MainApp extends JFrame {
         mainPanel = new JPanel(cardLayout);
 
         // Screens
-        WelcomeScreen welcomePanel = new WelcomeScreen(this);
+        WelcomePage welcomePanel = new WelcomePage(this);
         Login loginPanel = new Login(this);
         Register registerPanel = new Register(this);
         Dashboard dashboardPanel = new Dashboard(this);
