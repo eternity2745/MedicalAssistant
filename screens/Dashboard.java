@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
-import src.main.app.MainApp;
+import app.MainApp;
 import utilities.GradientPanel;
 
 public class Dashboard extends JPanel {

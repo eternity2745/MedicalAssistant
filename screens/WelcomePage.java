@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import src.main.app.MainApp;
+import app.MainApp;
 import utilities.CircularImagePanel;
 
 // Class for showing the welcome page
