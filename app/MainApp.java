@@ -1,8 +1,12 @@
 package app;
-import java.awt.*;
+import java.awt.CardLayout;
 import java.io.File;
+
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
 import screens.Dashboard;
 import screens.Login;
 import screens.Register;

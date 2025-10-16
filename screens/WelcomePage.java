@@ -1,5 +1,4 @@
 package screens;
-import app.MainApp;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -8,6 +7,8 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import src.main.app.MainApp;
 import utilities.CircularImagePanel;
 
 // Class for showing the welcome page

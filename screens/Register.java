@@ -1,8 +1,9 @@
 package screens;
 
-import app.MainApp;
 import java.awt.*;
 import javax.swing.*;
+
+import src.main.app.MainApp;
 
 // Class for creating register screen
 public class Register extends JPanel {

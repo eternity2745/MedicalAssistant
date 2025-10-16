@@ -1,12 +1,13 @@
 package screens;
 
-import app.MainApp;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
+
+import src.main.app.MainApp;
 import utilities.GradientPanel;
 
 public class Dashboard extends JPanel {

@@ -1,8 +1,9 @@
 package screens;
 
-import app.MainApp;
 import java.awt.*;
 import javax.swing.*;
+
+import src.main.app.MainApp;
 
 
 // Class For Login Page
@@ -80,8 +81,8 @@ public class Login extends JPanel {
         String email = emailField.getText().trim();
         String password = new String(passwordField.getPassword()).trim();
 
-        String validEmail = "";
-        String validPassword = "";
+        String validEmail = "a";
+        String validPassword = "a";
 
         if(email.isEmpty() || password.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill all fields!");
