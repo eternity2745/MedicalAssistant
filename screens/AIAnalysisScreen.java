@@ -1,9 +1,32 @@
 package screens;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.io.File;
-import javax.swing.*;
-import javax.swing.border.*;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.border.LineBorder;
+
+import utilities.AIAnalysisManager;
 
 public class AIAnalysisScreen extends JPanel {
 
@@ -145,16 +168,31 @@ public class AIAnalysisScreen extends JPanel {
 
         analyzeBtn.addActionListener(e -> {
             String patientId = patientIdField.getText().trim();
-            String symptoms = symptomInputArea.getText().trim();
+    String symptoms = symptomInputArea.getText().trim();
 
-            if (patientId.isEmpty() || symptoms.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please enter Patient ID and Symptoms!");
-                return;
-            }
+    if (patientId.isEmpty() || symptoms.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please enter Patient ID and Symptoms!");
+        return;
+    }
 
-            // Mock AI analysis
-            resultArea.setText("Analyzing patient ID: " + patientId + "\n\nSymptoms:\n" + symptoms
-                    + "\n\n[AI analysis/summarization output appears here...]");
+    resultArea.setText("Analyzing patient ID: " + patientId + "...\n\nPlease wait...");
+
+    // Run AI analysis in a background thread so UI doesn't freeze
+    new Thread(() -> {
+        try {
+            AIAnalysisManager ai = new AIAnalysisManager();
+            String result = ai.analyzeSymptoms(symptoms);
+
+            SwingUtilities.invokeLater(() -> {
+                resultArea.setText("Analysis for patient ID: " + patientId + "\n\n" + result);
+            });
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            SwingUtilities.invokeLater(() -> 
+                resultArea.setText("Error during AI analysis:\n" + ex.getMessage())
+            );
+        }
+        }).start();
         });
     }
 }
