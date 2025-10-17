@@ -17,6 +17,7 @@ screens\PatientDetailsScreen$1.class
 screens\SearchPatientsScreen$2.class
 utilities\AIAnalysisManager.class
 screens\WelcomePage$1.class
+utilities\ImageAnalysis.class
 utilities\SymptomAnalyzer.class
 screens\WelcomePage$2.class
 utilities\PDFUtils.class

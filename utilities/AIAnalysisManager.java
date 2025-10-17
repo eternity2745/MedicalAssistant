@@ -17,4 +17,8 @@ public class AIAnalysisManager {
     public String analyzeDocument(String filePath) {
         return new DocumentAnalysis(model).analyze(filePath);
     }
+
+    public String analyzeImage(String imagePath) {
+        return new ImageAnalysis(model).analyze(imagePath);
+    }
 }

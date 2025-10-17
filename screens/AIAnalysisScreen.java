@@ -33,7 +33,7 @@ public class AIAnalysisScreen extends JPanel {
 
     private JTextField patientIdField;
     private JTextArea symptomInputArea;
-    private JButton uploadReportBtn, analyzeBtn;
+    private JButton uploadReportBtn, analyzeBtn, uploadImgButton;
     private JTextArea resultArea;
 
     public AIAnalysisScreen() {
@@ -114,7 +114,9 @@ public class AIAnalysisScreen extends JPanel {
 
         uploadReportBtn = new JButton("Upload Report");
         analyzeBtn = new JButton("Analyze Symptoms");
+        uploadImgButton = new JButton("Upload Patient Image");
 
+        buttonPanel.add(uploadImgButton);
         buttonPanel.add(uploadReportBtn);
         buttonPanel.add(analyzeBtn);
 
@@ -155,6 +157,41 @@ public class AIAnalysisScreen extends JPanel {
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 
         add(scrollPane, BorderLayout.CENTER);
+
+        uploadImgButton.addActionListener(e -> {
+            String patientId = patientIdField.getText().trim();
+            if (patientId.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please enter Patient ID!");
+                return;
+            }
+            JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            JFileChooser chooser = new JFileChooser();
+            chooser.setDialogTitle("Select Patient Image");
+            chooser.setFileFilter(new FileNameExtensionFilter("Image files", "jpg", "jpeg", "png"));
+            int returnVal = chooser.showOpenDialog(this);
+
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File imageFile = chooser.getSelectedFile();
+                resultArea.setText("Analyzing image: " + imageFile.getName() + "...\nPlease wait...");
+
+                new Thread(() -> {
+                     try {
+                        AIAnalysisManager ai = new AIAnalysisManager();
+                        String result = ai.analyzeImage(imageFile.getAbsolutePath());
+
+                        SwingUtilities.invokeLater(() -> {
+                            resultArea.setText("Analysis for patient ID: " + patientId + "\n\n" + result);
+                        });
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        SwingUtilities.invokeLater(() -> 
+                            resultArea.setText("Error during AI analysis:\n" + ex.getMessage())
+                        );
+                    }
+                }).start();
+            }
+        });
+
 
         // ----- Button Actions -----
         uploadReportBtn.addActionListener(e -> {
