@@ -25,6 +25,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import utilities.AIAnalysisManager;
 
@@ -157,42 +158,67 @@ public class AIAnalysisScreen extends JPanel {
 
         // ----- Button Actions -----
         uploadReportBtn.addActionListener(e -> {
+            String patientId = patientIdField.getText().trim();
+            if (patientId.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please enter Patient ID!");
+                return;
+            }
+
             JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
             JFileChooser chooser = new JFileChooser();
-            int returnVal = chooser.showOpenDialog(topFrame);
+            chooser.setDialogTitle("Select Patient Report PDF");
+            chooser.setFileFilter(new FileNameExtensionFilter("PDF Documents", "pdf"));
+            int returnVal = chooser.showOpenDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
-                File file = chooser.getSelectedFile();
-                JOptionPane.showMessageDialog(topFrame, "Selected file: " + file.getName());
+                File pdfFile = chooser.getSelectedFile();
+                resultArea.setText("Analyzing file: " + pdfFile.getName() + "...\nPlease wait...");
+
+                new Thread(() -> {
+                     try {
+                        AIAnalysisManager ai = new AIAnalysisManager();
+                        String result = ai.analyzeDocument(pdfFile.getAbsolutePath());
+
+                        SwingUtilities.invokeLater(() -> {
+                            resultArea.setText("Analysis for patient ID: " + patientId + "\n\n" + result);
+                        });
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        SwingUtilities.invokeLater(() -> 
+                            resultArea.setText("Error during AI analysis:\n" + ex.getMessage())
+                        );
+                    }
+                }).start();
             }
+
         });
 
         analyzeBtn.addActionListener(e -> {
             String patientId = patientIdField.getText().trim();
-    String symptoms = symptomInputArea.getText().trim();
+            String symptoms = symptomInputArea.getText().trim();
 
-    if (patientId.isEmpty() || symptoms.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Please enter Patient ID and Symptoms!");
-        return;
-    }
+            if (patientId.isEmpty() || symptoms.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please enter Patient ID and Symptoms!");
+                return;
+            }
 
-    resultArea.setText("Analyzing patient ID: " + patientId + "...\n\nPlease wait...");
+            resultArea.setText("Analyzing patient ID: " + patientId + "...\n\nPlease wait...");
 
-    // Run AI analysis in a background thread so UI doesn't freeze
-    new Thread(() -> {
-        try {
-            AIAnalysisManager ai = new AIAnalysisManager();
-            String result = ai.analyzeSymptoms(symptoms);
+            // Run AI analysis in a background thread so UI doesn't freeze
+            new Thread(() -> {
+                try {
+                    AIAnalysisManager ai = new AIAnalysisManager();
+                    String result = ai.analyzeSymptoms(symptoms);
 
-            SwingUtilities.invokeLater(() -> {
-                resultArea.setText("Analysis for patient ID: " + patientId + "\n\n" + result);
-            });
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            SwingUtilities.invokeLater(() -> 
-                resultArea.setText("Error during AI analysis:\n" + ex.getMessage())
-            );
-        }
-        }).start();
-        });
+                    SwingUtilities.invokeLater(() -> {
+                        resultArea.setText("Analysis for patient ID: " + patientId + "\n\n" + result);
+                    });
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    SwingUtilities.invokeLater(() -> 
+                        resultArea.setText("Error during AI analysis:\n" + ex.getMessage())
+                    );
+                }
+                }).start();
+                });
     }
 }

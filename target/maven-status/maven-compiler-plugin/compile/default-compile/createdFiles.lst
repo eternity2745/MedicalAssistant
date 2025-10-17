@@ -7,6 +7,7 @@ screens\ProfileScreen.class
 screens\Login.class
 screens\WelcomePage.class
 screens\WelcomePage$3.class
+utilities\DocumentAnalysis.class
 utilities\GradientPanel.class
 screens\HomePage.class
 screens\AIAnalysisScreen$1.class
@@ -18,6 +19,7 @@ utilities\AIAnalysisManager.class
 screens\WelcomePage$1.class
 utilities\SymptomAnalyzer.class
 screens\WelcomePage$2.class
+utilities\PDFUtils.class
 screens\Dashboard.class
 screens\AIAnalysisScreen.class
 screens\HomePage$1.class

@@ -14,7 +14,7 @@ public class AIAnalysisManager {
         return new SymptomAnalyzer(model).analyze(symptoms);
     }
 
-    // public String analyzeDocument(String docText) {
-    //     return new DocumentAnalyzer(model).analyze(docText);
-    // }
+    public String analyzeDocument(String filePath) {
+        return new DocumentAnalysis(model).analyze(filePath);
+    }
 }
