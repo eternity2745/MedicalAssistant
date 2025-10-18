@@ -23,6 +23,7 @@ screens\WelcomePage$2.class
 utilities\PDFUtils.class
 screens\Dashboard.class
 screens\AIAnalysisScreen.class
+database\DatabaseConnection.class
 screens\HomePage$1.class
 screens\Register.class
 utilities\AIAnalyzer.class

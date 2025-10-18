@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import database.DatabaseConnection;
 import screens.Dashboard;
 import screens.Login;
 import screens.Register;
@@ -50,6 +51,13 @@ public class MainApp extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new MainApp());
+        SwingUtilities.invokeLater(() -> {
+            DatabaseConnection.getConnection();
+            new MainApp();
+        });
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            DatabaseConnection.closeConnection();
+        }));
     }
 }
