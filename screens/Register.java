@@ -22,6 +22,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import app.MainApp;
+import database.DoctorDAO;
+import utilities.Doctor;
 
 // Class for creating register screen
 public class Register extends JPanel {
@@ -154,6 +156,25 @@ public class Register extends JPanel {
             JOptionPane.showMessageDialog(this, "Passwords do not match!");
             return;
         }
+
+        Doctor doctor = new Doctor(
+            name,
+            email,
+            phoneField.getText(),
+            password,
+            hospitalField.getText(),
+            specializationField.getText()
+        );
+
+        boolean result = DoctorDAO.registerDoctor(doctor);
+
+        if (result == true) {
+            JOptionPane.showMessageDialog(this, "Registered successfully!");
+            parent.showScreen("Login");
+        } else {
+            JOptionPane.showMessageDialog(this, "Registration failed! Try again.");
+        }
+
 
         JOptionPane.showMessageDialog(this, "Registered successfully! You can login now.");
         parent.showScreen("Login");

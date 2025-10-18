@@ -1,6 +1,7 @@
 screens\Dashboard$1.class
 utilities\CircularImagePanel.class
 utilities\ModelProvider.class
+database\DoctorDAO.class
 screens\SearchPatientsScreen$1.class
 screens\SearchPatientsScreen.class
 screens\ProfileScreen.class
@@ -20,8 +21,10 @@ screens\WelcomePage$1.class
 utilities\ImageAnalysis.class
 utilities\SymptomAnalyzer.class
 screens\WelcomePage$2.class
+utilities\Doctor.class
 utilities\PDFUtils.class
 screens\Dashboard.class
+utilities\User.class
 screens\AIAnalysisScreen.class
 database\DatabaseConnection.class
 screens\HomePage$1.class
