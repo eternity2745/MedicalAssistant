@@ -1,7 +1,25 @@
 package screens;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.RenderingHints;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import app.MainApp;
 
@@ -19,7 +37,7 @@ public class Register extends JPanel {
         registerPanel.setOpaque(true);
         registerPanel.setBackground(new Color(255, 255, 255, 230));
         registerPanel.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
-        registerPanel.setPreferredSize(new Dimension(450, 550)); // taller for more fields
+        registerPanel.setPreferredSize(new Dimension(520, 800)); // taller for more fields
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -53,36 +71,66 @@ public class Register extends JPanel {
         gbc.gridy = 4;
         registerPanel.add(emailField, gbc);
 
+        JLabel phone = new JLabel("Phone");
+        phone.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        gbc.gridy = 5;
+        registerPanel.add(phone, gbc);
+
+        JTextField phoneField = new JTextField();
+        phoneField.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        gbc.gridy = 6;
+        registerPanel.add(phoneField, gbc);
+
+        JLabel hospital = new JLabel("Hospital");
+        hospital.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        gbc.gridy = 7;
+        registerPanel.add(hospital, gbc);
+
+        JTextField hospitalField = new JTextField();
+        hospitalField.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        gbc.gridy = 8;
+        registerPanel.add(hospitalField, gbc);
+
+        JLabel specialization = new JLabel("Specialization");
+        specialization.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        gbc.gridy = 9;
+        registerPanel.add(specialization, gbc);
+
+        JTextField specializationField = new JTextField();
+        specializationField.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        gbc.gridy = 10;
+        registerPanel.add(specializationField, gbc);
+
         JLabel passwordLabel = new JLabel("Password");
         passwordLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        gbc.gridy = 5;
+        gbc.gridy = 11;
         registerPanel.add(passwordLabel, gbc);
 
         JPasswordField passwordField = new JPasswordField();
         passwordField.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        gbc.gridy = 6;
+        gbc.gridy = 12;
         registerPanel.add(passwordField, gbc);
 
         JLabel confirmLabel = new JLabel("Confirm Password");
         confirmLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        gbc.gridy = 7;
+        gbc.gridy = 13;
         registerPanel.add(confirmLabel, gbc);
 
         JPasswordField confirmField = new JPasswordField();
         confirmField.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        gbc.gridy = 8;
+        gbc.gridy = 14;
         registerPanel.add(confirmField, gbc);
 
         JButton registerBtn = new JButton("Register");
         registerBtn.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        gbc.gridy = 9;
+        gbc.gridy = 15;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.CENTER;
         registerPanel.add(registerBtn, gbc);
 
         JButton backBtn = new JButton("Back to Login");
         backBtn.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        gbc.gridy = 10;
+        gbc.gridy = 16;
         registerPanel.add(backBtn, gbc);
 
         JPanel container = new JPanel(new GridBagLayout());
