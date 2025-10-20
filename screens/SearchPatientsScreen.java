@@ -146,6 +146,7 @@ public class SearchPatientsScreen extends JPanel {
         overlayPanel.removeAll();
 
         PatientDetailsScreen detailsScreen = new PatientDetailsScreen(
+                patient.getID(),
                 patient.getName(),
                 patient.getAge(),
                 patient.getProfilePic(),
