@@ -5,12 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
-<<<<<<< HEAD
-=======
 import java.util.ArrayList;
 import java.util.List;
 
->>>>>>> 0cd480385785a384ac8e1ab263fcdec02deb4e73
 import utilities.Patient;
 import utilities.Doctor;
 
@@ -106,34 +103,6 @@ public static boolean registerPatient(Patient patient, int doctorID) {
         return patients;
     }
 
-<<<<<<< HEAD
-    // ---------------- Update Patient ----------------
-    public static boolean updatePatient(Patient patient) {
-        try (Connection con = DatabaseConnection.getConnection();
-             PreparedStatement ps = con.prepareStatement(
-                 "UPDATE patients SET age=?, medications=?, disease=? WHERE id=?")) {
-
-            ps.setInt(1, patient.getAge());
-            ps.setString(2, patient.getMedications());
-            ps.setString(3, patient.getCondition());
-            ps.setInt(4, patient.getID());
-
-            return ps.executeUpdate() > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    // --- Overloaded version for doctor update + completion ---
-   public static boolean updatePatient(Patient patient, int doctorID, boolean completed) {
-    boolean updated = updatePatient(patient);
-    if (updated) {
-        HistoryDAO.updateHistoryCompletion(patient.getID(), doctorID, completed);
-    }
-    return updated;
-}
-=======
     public static List<Patient> getAllPatients() {
         List<Patient> list = new ArrayList<>();
         String query = "SELECT * FROM patients ORDER BY name LIMIT 10";
@@ -210,34 +179,7 @@ public static boolean registerPatient(Patient patient, int doctorID) {
             return false;
         }
     }
-    public static Patient getPatientByID(int id) {
-        Patient patient = null;
-        try (Connection con = DatabaseConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM patients WHERE id=?")) {
-            ps.setInt(1, id);
-            var rs = ps.executeQuery();
-            if(rs.next()) {
-                patient = new Patient();
-                patient.setID(rs.getInt("id"));
-                patient.setName(rs.getString("name"));
-                patient.setAge(rs.getInt("age"));
-                patient.setEmail(rs.getString("email"));
-                patient.setGender(rs.getString("gender"));
-                patient.setDob(rs.getString("dob"));
-                patient.setPhone(rs.getString("phone"));
-                patient.setAllergies(rs.getString("allergies"));
-                patient.setMedications(rs.getString("medications"));
-                patient.setBloodGroup(rs.getString("blood_group"));
-                patient.setCondition(rs.getString("disease"));
-                patient.setAddress(rs.getString("address"));
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        return patient;
-    }
->>>>>>> 0cd480385785a384ac8e1ab263fcdec02deb4e73
-
+    
 
     // ---------------- Get Patient By ID ----------------
     public static Patient getPatientByID(int id) {

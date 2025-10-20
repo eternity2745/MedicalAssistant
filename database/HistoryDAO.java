@@ -2,10 +2,15 @@ package database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-<<<<<<< HEAD
 import java.sql.SQLException;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import utilities.VisitRecord;
 
 public class HistoryDAO {
 
@@ -23,16 +28,11 @@ public class HistoryDAO {
             ps.setString(5, hospital);
             ps.setString(6, "N"); // N = not completed yet
             ps.executeUpdate();
-=======
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
-import utilities.VisitRecord;
-
-public class HistoryDAO {
-
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public static List<VisitRecord> getVisitHistoryByPatientID(int patientID) {
         List<VisitRecord> visits = new ArrayList<>();
 
@@ -57,36 +57,10 @@ public class HistoryDAO {
                 );
                 visits.add(record);
             }
->>>>>>> 0cd480385785a384ac8e1ab263fcdec02deb4e73
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-<<<<<<< HEAD
-    }
-
-    // --- Update completion status ---
-    public static void updateHistoryCompletion(int patientID, int doctorID, boolean completed) {
-        String query = "UPDATE history SET completed = ? WHERE patientID = ? AND doctorID = ?";
-
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(query)) {
-
-            ps.setString(1, completed ? "Y" : "N");
-            ps.setInt(2, patientID);
-            ps.setInt(3, doctorID);
-            ps.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+         return visits;
     }
 }
-
-
-=======
-
-        return visits;
-    }
-}
->>>>>>> 0cd480385785a384ac8e1ab263fcdec02deb4e73
