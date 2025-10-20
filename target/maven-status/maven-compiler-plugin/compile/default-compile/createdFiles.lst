@@ -1,10 +1,7 @@
 screens\Dashboard$1.class
 utilities\CircularImagePanel.class
 utilities\ModelProvider.class
-<<<<<<< HEAD
 screens\HomePage$2.class
-=======
->>>>>>> 05ab52173f807f77041e02017e8b36c588748d47
 database\DoctorDAO.class
 screens\SearchPatientsScreen$1.class
 screens\SearchPatientsScreen.class
@@ -14,10 +11,7 @@ screens\WelcomePage.class
 screens\WelcomePage$3.class
 utilities\DocumentAnalysis.class
 utilities\GradientPanel.class
-<<<<<<< HEAD
 screens\HomePage.class
-=======
->>>>>>> 05ab52173f807f77041e02017e8b36c588748d47
 screens\AIAnalysisScreen$1.class
 screens\PatientDetailsScreen.class
 app\MainApp.class
@@ -25,10 +19,7 @@ utilities\DoctorSession.class
 screens\PatientDetailsScreen$1.class
 screens\SearchPatientsScreen$2.class
 utilities\AIAnalysisManager.class
-<<<<<<< HEAD
 utilities\Patient.class
-=======
->>>>>>> 05ab52173f807f77041e02017e8b36c588748d47
 screens\WelcomePage$1.class
 utilities\ImageAnalysis.class
 utilities\SymptomAnalyzer.class
@@ -39,11 +30,7 @@ screens\Dashboard.class
 utilities\User.class
 screens\AIAnalysisScreen.class
 database\DatabaseConnection.class
-<<<<<<< HEAD
 screens\HomePage$1.class
 screens\Register.class
 database\PatientDAO.class
-=======
-screens\Register.class
->>>>>>> 05ab52173f807f77041e02017e8b36c588748d47
 utilities\AIAnalyzer.class
