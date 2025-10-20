@@ -3,8 +3,10 @@ utilities\CircularImagePanel.class
 utilities\ModelProvider.class
 screens\HomePage$2.class
 database\DoctorDAO.class
+database\HistoryDAO.class
 screens\SearchPatientsScreen$1.class
 screens\SearchPatientsScreen.class
+utilities\History.class
 screens\ProfileScreen.class
 screens\Login.class
 screens\WelcomePage.class

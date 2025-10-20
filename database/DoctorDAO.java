@@ -137,5 +137,35 @@ public class DoctorDAO {
             return rs.next() ? rs.getInt(1) : 0;
         }
     }
+    public static Doctor getDoctorByID(int id) {
+    String query = "SELECT * FROM doctors WHERE id = ?";
+
+    try (Connection conn = DatabaseConnection.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(query)) {
+
+        stmt.setInt(1, id);
+        var rs = stmt.executeQuery();
+        if (rs.next()) {
+            Doctor doctor = new Doctor(
+                rs.getString("name"),
+                rs.getString("email"),
+                rs.getString("phone"),
+                rs.getString("password"),
+                rs.getString("hospital"),
+                rs.getString("specialization")
+            );
+            doctor.setID(rs.getInt("id"));
+            doctor.setProfilePic(rs.getString("profilePic"));
+            doctor.setAIAnalysis(rs.getInt("AI"));
+            return doctor;
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return null;
+}
+
+
 
 }

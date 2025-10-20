@@ -1,5 +1,6 @@
 C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\screens\AIAnalysisScreen.java
 C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\screens\Login.java
+C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\database\HistoryDAO.java
 C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\screens\Dashboard.java
 C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\utilities\CircularImagePanel.java
 C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\utilities\Patient.java
@@ -12,6 +13,7 @@ C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\database\DatabaseConnection.java
 C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\screens\Register.java
 C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\utilities\ModelProvider.java
 C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\database\PatientDAO.java
+C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\utilities\History.java
 C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\screens\PatientDetailsScreen.java
 C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\screens\ProfileScreen.java
 C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\screens\WelcomePage.java

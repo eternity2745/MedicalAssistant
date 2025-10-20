@@ -4,11 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
-
 import utilities.Patient;
+import utilities.Doctor;
 
 public class PatientDAO {
+    
 
+    // ---------------- Register Patient ----------------
     public static boolean registerPatient(Patient patient) {
         String query = "INSERT INTO patients (id, name, age, profilePic, email, gender, dob, phone, allergies, medications, bloodGroup, disease, address) "
                      + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -49,6 +51,25 @@ public class PatientDAO {
         }
     }
 
+    // --- Overloaded version (doctor + patient) ---
+    // --- Overloaded version (doctor + patient) ---
+public static boolean registerPatient(Patient patient, int doctorID) {
+    boolean registered = registerPatient(patient);
+    if (registered) {
+        Doctor doctor = DoctorDAO.getDoctorByID(doctorID); // fetch the doctor
+        String hospital = (doctor != null && doctor.getHospital() != null) ? doctor.getHospital() : "Unknown";
+        
+        HistoryDAO.addHistoryRecord(
+            patient.getID(),
+            doctorID,
+            patient.getCondition(),
+            hospital
+        );
+    }
+    return registered;
+}
+
+
     // ---------------- Search Patients ----------------
     public static java.util.List<Patient> searchPatients(String keyword) {
         java.util.List<Patient> patients = new java.util.ArrayList<>();
@@ -77,50 +98,64 @@ public class PatientDAO {
         }
         return patients;
     }
-   public static boolean updatePatient(Patient patient) {
-    try (Connection con = DatabaseConnection.getConnection();
-         PreparedStatement ps = con.prepareStatement(
-             "UPDATE patients SET age=?, medications=?, disease=? WHERE id=?")) {
 
-        ps.setInt(1, patient.getAge());
-        ps.setString(2, patient.getMedications());
-        ps.setString(3, patient.getCondition());
-        ps.setInt(4, patient.getID());
+    // ---------------- Update Patient ----------------
+    public static boolean updatePatient(Patient patient) {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(
+                 "UPDATE patients SET age=?, medications=?, disease=? WHERE id=?")) {
 
-        return ps.executeUpdate() > 0;
-    } catch (Exception e) {
-        e.printStackTrace();
-        return false;
-    }
-}
-public static Patient getPatientByID(int id) {
-    Patient patient = null;
-    try (Connection con = DatabaseConnection.getConnection();
-         PreparedStatement ps = con.prepareStatement("SELECT * FROM patients WHERE id=?")) {
-        ps.setInt(1, id);
-        var rs = ps.executeQuery();
-        if(rs.next()) {
-            patient = new Patient();
-            patient.setID(rs.getInt("id"));
-            patient.setName(rs.getString("name"));
-            patient.setAge(rs.getInt("age"));
-            patient.setEmail(rs.getString("email"));
-            patient.setGender(rs.getString("gender"));
-            patient.setDob(rs.getString("dob"));
-            patient.setPhone(rs.getString("phone"));
-            patient.setAllergies(rs.getString("allergies"));
-            patient.setMedications(rs.getString("medications"));
-            patient.setBloodGroup(rs.getString("blood_group"));
-            patient.setCondition(rs.getString("disease"));
-            patient.setAddress(rs.getString("address"));
+            ps.setInt(1, patient.getAge());
+            ps.setString(2, patient.getMedications());
+            ps.setString(3, patient.getCondition());
+            ps.setInt(4, patient.getID());
+
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
-    } catch(Exception e) {
-        e.printStackTrace();
     }
-    return patient;
+
+    // --- Overloaded version for doctor update + completion ---
+   public static boolean updatePatient(Patient patient, int doctorID, boolean completed) {
+    boolean updated = updatePatient(patient);
+    if (updated) {
+        HistoryDAO.updateHistoryCompletion(patient.getID(), doctorID, completed);
+    }
+    return updated;
 }
 
 
+    // ---------------- Get Patient By ID ----------------
+    public static Patient getPatientByID(int id) {
+        Patient patient = null;
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement("SELECT * FROM patients WHERE id=?")) {
+            ps.setInt(1, id);
+            var rs = ps.executeQuery();
+            if (rs.next()) {
+                patient = new Patient();
+                patient.setID(rs.getInt("id"));
+                patient.setName(rs.getString("name"));
+                patient.setAge(rs.getInt("age"));
+                patient.setEmail(rs.getString("email"));
+                patient.setGender(rs.getString("gender"));
+                patient.setDob(rs.getDate("dob").toString());
+                patient.setPhone(rs.getString("phone"));
+                patient.setAllergies(rs.getString("allergies"));
+                patient.setMedications(rs.getString("medications"));
+                patient.setBloodGroup(rs.getString("bloodGroup"));
+                patient.setCondition(rs.getString("disease"));
+                patient.setAddress(rs.getString("address"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return patient;
+    }
 }
+
+
 
 
