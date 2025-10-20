@@ -10,7 +10,7 @@ import utilities.Patient;
 public class PatientDAO {
 
     public static boolean registerPatient(Patient patient) {
-        String query = "INSERT INTO patients (id, name, profilePic, email, gender, dob, phone, allergies, medications, bloodGroup, condition, address) "
+        String query = "INSERT INTO patients (id, name, profilePic, email, gender, dob, phone, allergies, medications, bloodGroup, disease, address) "
                      + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         int id = (int)(Math.random() * 70000) + (int)(Math.random() * 10000);
@@ -67,7 +67,7 @@ public class PatientDAO {
                 p.setName(rs.getString("name"));
                 p.setEmail(rs.getString("email"));
                 p.setGender(rs.getString("gender"));
-                p.setCondition(rs.getString("condition"));
+                p.setCondition(rs.getString("disease"));
                 patients.add(p);
             }
 
