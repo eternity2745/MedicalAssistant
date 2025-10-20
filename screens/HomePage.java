@@ -197,6 +197,7 @@ public class HomePage extends JPanel {
 
                 // Patient Fields
                 JTextField nameField = new JTextField();
+                JTextField ageField = new JTextField();
                 JTextField emailField = new JTextField();
                 JTextField genderField = new JTextField();
                 JTextField dobField = new JTextField();      // YYYY-MM-DD
@@ -209,6 +210,7 @@ public class HomePage extends JPanel {
 
                 // Add labeled fields
                 content.add(createLabeledField("Name:", nameField));
+                content.add(createLabeledField("Age", ageField));
                 content.add(createLabeledField("Email:", emailField));
                 content.add(createLabeledField("Gender:", genderField));
                 content.add(createLabeledField("DOB (YYYY-MM-DD):", dobField));
@@ -230,6 +232,7 @@ public class HomePage extends JPanel {
                 submitBtn.addActionListener(ev2 -> {
                     Patient patient = new Patient();
                     patient.setName(nameField.getText());
+                    patient.setAge(Integer.parseInt(ageField.getText()));
                     patient.setEmail(emailField.getText());
                     patient.setGender(genderField.getText());
                     patient.setDob(dobField.getText());

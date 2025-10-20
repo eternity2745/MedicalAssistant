@@ -80,7 +80,7 @@ public class DoctorDAO {
         List<Object[]> recentPatients = new ArrayList<>();
 
         String query = """
-            SELECT p.name, p.age, p.gender, p.condition
+            SELECT p.name, p.age, p.gender, p.disease
             FROM history h
             JOIN patients p ON h.patientID = p.id
             WHERE h.doctorID = ? AND h.completed = 'T'
@@ -99,7 +99,7 @@ public class DoctorDAO {
                     rs.getString("name"),
                     rs.getInt("age"),
                     rs.getString("gender"),
-                    rs.getString("condition")
+                    rs.getString("disease")
                 };
                 recentPatients.add(row);
             }

@@ -4,6 +4,7 @@ public class Patient {
 
     private int ID;
     private String name;
+    private int age;
     private String profilePic;
     private String email;
     private String gender;
@@ -21,6 +22,9 @@ public class Patient {
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
+
+    public int getAge() { return age; }
+    public void setAge(int age) { this.age = age; }
 
     public String getProfilePic() { return profilePic; }
     public void setProfilePic(String profilePic) { this.profilePic = profilePic; }
