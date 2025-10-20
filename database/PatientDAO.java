@@ -24,7 +24,7 @@ public class PatientDAO {
 
             stmt.setInt(1, id);
             stmt.setString(2, patient.getName());
-            stmt.setString(3, patient.getAge());
+            stmt.setInt(3, patient.getAge());
             stmt.setString(4, profilePic);
             stmt.setString(5, patient.getEmail());
             stmt.setString(6, patient.getGender());
