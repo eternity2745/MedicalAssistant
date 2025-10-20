@@ -43,4 +43,22 @@ public class DoctorDAO {
             return false;
         }
     }
+    public static boolean validateLogin(String email, String password) {
+    String query = "SELECT * FROM doctors WHERE email = ? AND password = ?";
+
+    try (Connection conn = DatabaseConnection.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(query)) {
+
+        stmt.setString(1, email);
+        stmt.setString(2, password);
+
+        var rs = stmt.executeQuery();
+        return rs.next(); // returns true if a match is found
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
+
 }

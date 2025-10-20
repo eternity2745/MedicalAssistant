@@ -2,7 +2,7 @@ package screens;
 
 import java.awt.*;
 import javax.swing.*;
-
+import database.DoctorDAO;
 import app.MainApp;
 
 
@@ -77,25 +77,26 @@ public class Login extends JPanel {
 
         add(container, BorderLayout.CENTER);
 
-        loginBtn.addActionListener(e -> {
-        String email = emailField.getText().trim();
-        String password = new String(passwordField.getPassword()).trim();
+   loginBtn.addActionListener(e -> {
+    String email = emailField.getText().trim();
+    String password = new String(passwordField.getPassword()).trim();
 
-        String validEmail = "a";
-        String validPassword = "a";
+    if(email.isEmpty() || password.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please fill all fields!");
+        return;
+    }
 
-        if(email.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill all fields!");
-            return;
-        }
+    boolean isValid = DoctorDAO.validateLogin(email, password);
 
-        if(email.equals(validEmail) && password.equals(validPassword)) {
-            JOptionPane.showMessageDialog(this, "Login Successful!");
-            parent.showScreen("Dashboard");
-        } else {
-            JOptionPane.showMessageDialog(this, "Invalid credentials!");
-        }
-    });
+    if(isValid) {
+        JOptionPane.showMessageDialog(this, "Login Successful!");
+        parent.showScreen("Dashboard");
+    } else {
+        JOptionPane.showMessageDialog(this, "Invalid credentials!");
+    }
+});
+
+       
         registerBtn.addActionListener(e -> parent.showScreen("Register"));
     }
 
