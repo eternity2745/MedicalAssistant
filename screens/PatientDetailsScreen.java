@@ -24,7 +24,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import database.HistoryDAO;
 import utilities.CircularImagePanel;
-import utilities.VisitRecord;
+import utilities.History;
 
 // Class For Showing Patient Details
 public class PatientDetailsScreen extends JPanel {
@@ -115,7 +115,7 @@ public class PatientDetailsScreen extends JPanel {
         visitLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainPanel.add(visitLabel);
 
-        List<VisitRecord> history = HistoryDAO.getVisitHistoryByPatientID(patientID);
+        List<History> history = HistoryDAO.getVisitHistoryByPatientID(patientID);
 
         if (history.isEmpty()) {
             JPanel noHistoryPanel = new JPanel();
@@ -138,10 +138,10 @@ public class PatientDetailsScreen extends JPanel {
             String[][] data = new String[history.size()][columns.length];
 
             for (int i = 0; i < history.size(); i++) {
-                VisitRecord r = history.get(i);
+                History r = history.get(i);
                 data[i][0] = r.getDate();
                 data[i][1] = r.getDisease();
-                data[i][2] = r.getDoctor();
+                data[i][2] = r.getDoctorName();
                 data[i][3] = r.getHospital();
             }
 

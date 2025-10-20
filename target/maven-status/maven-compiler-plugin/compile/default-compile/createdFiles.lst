@@ -1,6 +1,7 @@
 utilities\VisitRecord.class
 screens\Dashboard$1.class
 utilities\CircularImagePanel.class
+screens\PendingReportsWindow$1.class
 utilities\ModelProvider.class
 screens\HomePage$2.class
 database\DoctorDAO.class
@@ -22,6 +23,7 @@ utilities\DoctorSession.class
 screens\PatientDetailsScreen$1.class
 utilities\AIAnalysisManager.class
 utilities\Patient.class
+screens\PendingReportsWindow.class
 screens\WelcomePage$1.class
 utilities\ImageAnalysis.class
 utilities\SymptomAnalyzer.class
