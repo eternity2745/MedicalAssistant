@@ -10,8 +10,8 @@ import utilities.Patient;
 public class PatientDAO {
 
     public static boolean registerPatient(Patient patient) {
-        String query = "INSERT INTO patients (id, name, profilePic, email, gender, dob, phone, allergies, medications, bloodGroup, disease, address) "
-                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO patients (id, name, age, profilePic, email, gender, dob, phone, allergies, medications, bloodGroup, disease, address) "
+                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         int id = (int)(Math.random() * 70000) + (int)(Math.random() * 10000);
         String profilePic = "D:\\Java\\MedicalAssistant\\Resources\\Images\\patientProfile.jpg";
@@ -24,16 +24,17 @@ public class PatientDAO {
 
             stmt.setInt(1, id);
             stmt.setString(2, patient.getName());
-            stmt.setString(3, profilePic);
-            stmt.setString(4, patient.getEmail());
-            stmt.setString(5, patient.getGender());
-            stmt.setString(6, patient.getDob());
-            stmt.setString(7, patient.getPhone());
-            stmt.setString(8, patient.getAllergies());
-            stmt.setString(9, patient.getMedications());
-            stmt.setString(10, patient.getBloodGroup());
-            stmt.setString(11, patient.getCondition());
-            stmt.setString(12, patient.getAddress());
+            stmt.setString(3, patient.getAge());
+            stmt.setString(4, profilePic);
+            stmt.setString(5, patient.getEmail());
+            stmt.setString(6, patient.getGender());
+            stmt.setString(7, patient.getDob());
+            stmt.setString(8, patient.getPhone());
+            stmt.setString(9, patient.getAllergies());
+            stmt.setString(10, patient.getMedications());
+            stmt.setString(11, patient.getBloodGroup());
+            stmt.setString(12, patient.getCondition());
+            stmt.setString(13, patient.getAddress());
 
             int rowsInserted = stmt.executeUpdate();
             return rowsInserted > 0;
