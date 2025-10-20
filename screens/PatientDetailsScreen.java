@@ -1,17 +1,35 @@
 package screens;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
+
+import database.HistoryDAO;
 import utilities.CircularImagePanel;
+import utilities.VisitRecord;
 
 // Class For Showing Patient Details
 public class PatientDetailsScreen extends JPanel {
 
-    public PatientDetailsScreen(String patientName, String dob, String gender, String contact, String bloodGroup, JScrollPane scrlPane, JPanel searchPanel, JPanel searchPatients, JPanel overPanel) {
+    public PatientDetailsScreen(int patientID, String patientName, int age, String profilePic, String dob, String gender, String contact, String bloodGroup, String allergies, String medications, String conditions, String address, JScrollPane scrlPane, JPanel searchPanel, JPanel searchPatients, JPanel overPanel) {
         setLayout(new BorderLayout());
         setBackground(new Color(10, 25, 70));
 
@@ -40,7 +58,7 @@ public class PatientDetailsScreen extends JPanel {
 
         CircularImagePanel imagePanel;
         try {
-            imagePanel = new CircularImagePanel(ImageIO.read(new File("D:\\Java\\MedicalAssistant\\Resources\\Images\\doctorProfile.jpg"))); // size 120px
+            imagePanel = new CircularImagePanel(ImageIO.read(new File(profilePic))); // size 120px
         } catch (IOException e) {
             imagePanel = new CircularImagePanel(null); // fallback if image not found
             System.err.println("Error loading image: " + e.getMessage());
@@ -54,6 +72,9 @@ public class PatientDetailsScreen extends JPanel {
         JLabel nameLabel = new JLabel("Name: " + patientName);
         nameLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
         nameLabel.setForeground(Color.WHITE);
+        JLabel ageLabel = new JLabel("Age: " + age);
+        ageLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        ageLabel.setForeground(Color.WHITE);
         JLabel dobLabel = new JLabel("DOB: " + dob);
         dobLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         dobLabel.setForeground(Color.WHITE);
@@ -62,6 +83,8 @@ public class PatientDetailsScreen extends JPanel {
         genderLabel.setForeground(Color.WHITE);
 
         infoPanel.add(nameLabel);
+        infoPanel.add(Box.createVerticalStrut(10));
+        infoPanel.add(ageLabel);
         infoPanel.add(Box.createVerticalStrut(10));
         infoPanel.add(dobLabel);
         infoPanel.add(Box.createVerticalStrut(10));
@@ -78,10 +101,10 @@ public class PatientDetailsScreen extends JPanel {
 
         detailsPanel.add(createLabel("Contact: " + contact));
         detailsPanel.add(createLabel("Blood Group: " + bloodGroup));
-        detailsPanel.add(createLabel("Allergies: None"));
-        detailsPanel.add(createLabel("Existing Conditions: Hypertension"));
-        detailsPanel.add(createLabel("Medications: None"));
-        detailsPanel.add(createLabel("Address: 123, Main Street"));
+        detailsPanel.add(createLabel("Allergies: " + allergies));
+        detailsPanel.add(createLabel("Existing Conditions: " + conditions));
+        detailsPanel.add(createLabel("Medications: " + medications));
+        detailsPanel.add(createLabel("Address: " + address));
 
         mainPanel.add(detailsPanel);
 
@@ -89,46 +112,65 @@ public class PatientDetailsScreen extends JPanel {
         visitLabel.setFont(new Font("Segoe UI", Font.BOLD, 30));
         visitLabel.setForeground(Color.WHITE);
         visitLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
-        visitLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // center horizontally
+        visitLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainPanel.add(visitLabel);
 
-        String[] columns = {"Date", "Reason", "Doctor"};
-        String[][] data = {
-            {"2025-01-12", "Routine Checkup", "Dr. Smith"},
-            {"2025-03-05", "Blood Test", "Dr. Johnson"},
-            {"2025-05-20", "Follow-up", "Dr. Smith"},
-            {"2025-01-12", "Routine Checkup", "Dr. Smith"},
-            {"2025-03-05", "Blood Test", "Dr. Johnson"},
-            {"2025-05-20", "Follow-up", "Dr. Smith"}
-        };
+        // 🔹 Fetch from Database
+        List<VisitRecord> history = HistoryDAO.getVisitHistoryByPatientID(patientID);
 
-        JTable visitTable = new JTable(data, columns) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
+        if (history.isEmpty()) {
+            JPanel noHistoryPanel = new JPanel();
+            noHistoryPanel.setOpaque(false);
+            noHistoryPanel.setPreferredSize(new Dimension(visitTableWidth(), 250)); // same as table height
+            noHistoryPanel.setLayout(new BoxLayout(noHistoryPanel, BoxLayout.Y_AXIS));
+
+            JLabel noHistoryLabel = new JLabel("No visit history available for this patient.");
+            noHistoryLabel.setFont(new Font("Segoe UI", Font.ITALIC, 24));
+            noHistoryLabel.setForeground(Color.LIGHT_GRAY);
+            noHistoryLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            noHistoryLabel.setAlignmentY(Component.TOP_ALIGNMENT);
+
+            noHistoryPanel.add(noHistoryLabel);
+            noHistoryPanel.add(Box.createVerticalGlue());
+
+            mainPanel.add(noHistoryPanel);
+        } else {
+            String[] columns = {"Date", "Disease", "Doctor", "Hospital"};
+            String[][] data = new String[history.size()][columns.length];
+
+            for (int i = 0; i < history.size(); i++) {
+                VisitRecord r = history.get(i);
+                data[i][0] = r.getDate();
+                data[i][1] = r.getDisease();
+                data[i][2] = r.getDoctor();
+                data[i][3] = r.getHospital();
             }
-        };
 
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        for (int i = 0; i < visitTable.getColumnCount(); i++) {
-            visitTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+            JTable visitTable = new JTable(data, columns) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+            for (int i = 0; i < visitTable.getColumnCount(); i++) {
+                visitTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+            }
+
+            visitTable.setFillsViewportHeight(true);
+            visitTable.setRowHeight(30);
+            visitTable.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+            visitTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 24));
+            visitTable.getTableHeader().setReorderingAllowed(false);
+
+            JScrollPane tableScroll = new JScrollPane(visitTable);
+            tableScroll.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
+            tableScroll.setPreferredSize(new Dimension(visitTable.getPreferredSize().width, 250));
+
+            mainPanel.add(tableScroll);
         }
-
-        visitTable.setFillsViewportHeight(true);
-        visitTable.setRowHeight(30);
-        visitTable.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        visitTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 24));
-        visitTable.getTableHeader().setReorderingAllowed(false);
-
-        JScrollPane tableScroll = new JScrollPane(visitTable);
-        tableScroll.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
-
-        int tableHeight = 250;//Math.min(rowCount, maxVisibleRows) * visitTable.getRowHeight() + visitTable.getTableHeader().getPreferredSize().height;
-        tableScroll.setPreferredSize(new Dimension(visitTable.getPreferredSize().width, tableHeight));
-
-        mainPanel.add(tableScroll);
-
 
         add(scrollPane, BorderLayout.CENTER);
 
@@ -139,6 +181,10 @@ public class PatientDetailsScreen extends JPanel {
             searchPanel.setVisible(true);
 
         });
+    }
+
+    private int visitTableWidth() {
+        return 800; // or any width matching your UI layout
     }
 
     private JLabel createLabel(String text) {

@@ -1,3 +1,4 @@
+utilities\VisitRecord.class
 screens\Dashboard$1.class
 utilities\CircularImagePanel.class
 utilities\ModelProvider.class
@@ -19,7 +20,6 @@ screens\PatientDetailsScreen.class
 app\MainApp.class
 utilities\DoctorSession.class
 screens\PatientDetailsScreen$1.class
-screens\SearchPatientsScreen$2.class
 utilities\AIAnalysisManager.class
 utilities\Patient.class
 screens\WelcomePage$1.class
