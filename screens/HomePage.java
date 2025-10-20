@@ -233,7 +233,7 @@ public class HomePage extends JPanel {
                     patient.setCondition(conditionField.getText());
                     patient.setAddress(addressField.getText());
 
-                    boolean success = PatientDAO.registerPatient(patient);
+                    boolean success = PatientDAO.registerPatientHistory(patient, doctor.getID());
                     if (success) {
                         JOptionPane.showMessageDialog(formDialog, "✅ Patient added successfully!");
                         formDialog.dispose();
@@ -294,7 +294,7 @@ public class HomePage extends JPanel {
         JPanel updatePanel = new JPanel();
         updatePanel.setLayout(new BoxLayout(updatePanel, BoxLayout.Y_AXIS));
         updatePanel.setBorder(BorderFactory.createTitledBorder("Update Selected Patient"));
-        updatePanel.setVisible(false); // hidden initially
+        updatePanel.setVisible(false);
 
         JTextField ageUpdateField = new JTextField();
         JTextField medicationUpdateField = new JTextField();

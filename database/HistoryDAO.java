@@ -1,12 +1,11 @@
 package database;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.sql.Date;
-import java.time.LocalDate;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,18 +20,20 @@ public class HistoryDAO {
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(query)) {
 
+            System.out.println(Date.valueOf(LocalDate.now()));
             ps.setInt(1, patientID);
             ps.setInt(2, doctorID);
             ps.setDate(3, Date.valueOf(LocalDate.now())); // current date
             ps.setString(4, disease);
             ps.setString(5, hospital);
-            ps.setString(6, "N"); // N = not completed yet
+            ps.setString(6, "F");
             ps.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+    
     public static List<VisitRecord> getVisitHistoryByPatientID(int patientID) {
         List<VisitRecord> visits = new ArrayList<>();
 

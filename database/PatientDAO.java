@@ -8,8 +8,8 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
-import utilities.Patient;
 import utilities.Doctor;
+import utilities.Patient;
 
 public class PatientDAO {
     
@@ -57,21 +57,21 @@ public class PatientDAO {
 
     // --- Overloaded version (doctor + patient) ---
     // --- Overloaded version (doctor + patient) ---
-public static boolean registerPatient(Patient patient, int doctorID) {
-    boolean registered = registerPatient(patient);
-    if (registered) {
-        Doctor doctor = DoctorDAO.getDoctorByID(doctorID); // fetch the doctor
-        String hospital = (doctor != null && doctor.getHospital() != null) ? doctor.getHospital() : "Unknown";
-        
-        HistoryDAO.addHistoryRecord(
-            patient.getID(),
-            doctorID,
-            patient.getCondition(),
-            hospital
-        );
+    public static boolean registerPatientHistory(Patient patient, int doctorID) {
+        boolean registered = registerPatient(patient);
+        if (registered) {
+            Doctor doctor = DoctorDAO.getDoctorByID(doctorID); // fetch the doctor
+            String hospital = (doctor != null && doctor.getHospital() != null) ? doctor.getHospital() : "Unknown";
+            
+            HistoryDAO.addHistoryRecord(
+                patient.getID(),
+                doctorID,
+                patient.getCondition(),
+                hospital
+            );
+        }
+        return registered;
     }
-    return registered;
-}
 
 
     // ---------------- Search Patients ----------------
@@ -208,10 +208,6 @@ public static boolean registerPatient(Patient patient, int doctorID) {
         }
         return patient;
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> 60a5c330bd8038385c1efd4d26ff8e84d93f3389
 }
 
 
