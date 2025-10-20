@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\screens\AIAnalysisScreen.java
 C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\screens\Login.java
 C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\screens\Dashboard.java
@@ -22,31 +21,6 @@ C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\screens\HomePage.java
 C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\app\MainApp.java
 C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\utilities\ImageAnalysis.java
 C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\utilities\AIAnalyzer.java
+C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\utilities\DoctorSession.java
 C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\utilities\PDFUtils.java
 C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\utilities\AIAnalysisManager.java
-=======
-D:\Java\MedicalAssistant\screens\Login.java
-D:\Java\MedicalAssistant\utilities\AIAnalysisManager.java
-D:\Java\MedicalAssistant\utilities\GradientPanel.java
-D:\Java\MedicalAssistant\utilities\ModelProvider.java
-D:\Java\MedicalAssistant\app\MainApp.java
-D:\Java\MedicalAssistant\screens\WelcomePage.java
-D:\Java\MedicalAssistant\utilities\DocumentAnalysis.java
-D:\Java\MedicalAssistant\screens\HomePage.java
-D:\Java\MedicalAssistant\utilities\DoctorSession.java
-D:\Java\MedicalAssistant\screens\ProfileScreen.java
-D:\Java\MedicalAssistant\screens\Register.java
-D:\Java\MedicalAssistant\utilities\PDFUtils.java
-D:\Java\MedicalAssistant\utilities\CircularImagePanel.java
-D:\Java\MedicalAssistant\utilities\ImageAnalysis.java
-D:\Java\MedicalAssistant\screens\AIAnalysisScreen.java
-D:\Java\MedicalAssistant\database\DatabaseConnection.java
-D:\Java\MedicalAssistant\screens\PatientDetailsScreen.java
-D:\Java\MedicalAssistant\utilities\SymptomAnalyzer.java
-D:\Java\MedicalAssistant\utilities\User.java
-D:\Java\MedicalAssistant\screens\Dashboard.java
-D:\Java\MedicalAssistant\screens\SearchPatientsScreen.java
-D:\Java\MedicalAssistant\utilities\AIAnalyzer.java
-D:\Java\MedicalAssistant\database\DoctorDAO.java
-D:\Java\MedicalAssistant\utilities\Doctor.java
->>>>>>> 1da2a118bcd67e44a908960e449429cad5938d21
