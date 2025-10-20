@@ -1,11 +1,23 @@
 package screens;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.*;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import app.MainApp;
 import utilities.GradientPanel;
@@ -15,9 +27,20 @@ public class Dashboard extends JPanel {
     private MainApp parent;
     private JPanel contentPanel;
 
+    private HomePage homePage;
+    private SearchPatientsScreen searchPatientsScreen;
+    private ProfileScreen profileScreen;
+    private AIAnalysisScreen aiAnalysisScreen;
+
+
     public Dashboard(MainApp parent) {
         this.parent = parent;
         setLayout(new BorderLayout());
+
+        homePage = new HomePage(); // only once
+        searchPatientsScreen = new SearchPatientsScreen();
+        profileScreen = new ProfileScreen();
+        aiAnalysisScreen = new AIAnalysisScreen();
 
         // ----- Left Navigation Panel -----
         JPanel navPanel = new JPanel();
@@ -90,11 +113,10 @@ public class Dashboard extends JPanel {
     public void switchScreen(String screen) {
         contentPanel.removeAll();
         switch(screen) {
-            case "Home" -> showHome();
-            case "Search Patients" -> showSearchPatients();
-            case "Profile" -> showProfile();
-            case "AI Analysis" -> showAIAnalysis();
-            
+            case "Home" -> contentPanel.add(homePage, BorderLayout.CENTER);
+            case "Search Patients" -> contentPanel.add(searchPatientsScreen, BorderLayout.CENTER);
+            case "Profile" -> contentPanel.add(profileScreen, BorderLayout.CENTER);
+            case "AI Analysis" -> contentPanel.add(aiAnalysisScreen, BorderLayout.CENTER);
         }
         contentPanel.revalidate();
         contentPanel.repaint();
@@ -102,32 +124,20 @@ public class Dashboard extends JPanel {
 
     // ----- Screen Methods -----
     private void showHome() {
-        contentPanel.removeAll();
-        contentPanel.add(new HomePage(), BorderLayout.CENTER);
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        switchScreen("Home");
     }
-
 
     private void showSearchPatients() {
-        contentPanel.removeAll();
-        contentPanel.add(new SearchPatientsScreen(), BorderLayout.CENTER);
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        switchScreen("Search Patients");
     }
 
+
     private void showProfile() {
-        contentPanel.removeAll();
-        contentPanel.add(new ProfileScreen(), BorderLayout.CENTER);
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        switchScreen("Profile");
     }
 
     private void showAIAnalysis() {
-        contentPanel.removeAll();
-        contentPanel.add(new AIAnalysisScreen(), BorderLayout.CENTER);
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        switchScreen("AI Analysis");
     }
 
     @Override
