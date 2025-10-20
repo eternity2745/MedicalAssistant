@@ -37,7 +37,7 @@ public class Dashboard extends JPanel {
         this.parent = parent;
         setLayout(new BorderLayout());
 
-        homePage = new HomePage(); // only once
+        homePage = new HomePage();
         searchPatientsScreen = new SearchPatientsScreen();
         profileScreen = new ProfileScreen();
         aiAnalysisScreen = new AIAnalysisScreen();
@@ -68,12 +68,10 @@ public class Dashboard extends JPanel {
             label.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    // Reset previous active label to white
                     if (active[0] != null && active[0] != label) {
                         active[0].setForeground(Color.WHITE);
                     }
 
-                    // Set clicked label as active
                     label.setForeground(Color.CYAN);
                     active[0] = label;
 
@@ -83,7 +81,7 @@ public class Dashboard extends JPanel {
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     if (label != active[0]) {
-                        label.setForeground(new Color(0, 200, 255)); // hover effect
+                        label.setForeground(new Color(0, 200, 255));
                     }
                 }
 

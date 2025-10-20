@@ -36,7 +36,6 @@ public class SearchPatientsScreen extends JPanel {
         setLayout(new BorderLayout());
         setOpaque(false);
 
-        // 🔍 Search Bar Panel
         searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel searchLabel = new JLabel("Search Patient:");
         searchField = new JTextField();
@@ -53,7 +52,6 @@ public class SearchPatientsScreen extends JPanel {
         searchPanel.add(searchButton);
         add(searchPanel, BorderLayout.NORTH);
 
-        // 📋 List of Results
         listModel = new DefaultListModel<>();
         resultsList = new JList<>(listModel);
         resultsList.setBorder(BorderFactory.createEmptyBorder(10, 20, 5, 5));
@@ -68,17 +66,13 @@ public class SearchPatientsScreen extends JPanel {
         scrollPane.setOpaque(false);
         add(scrollPane, BorderLayout.CENTER);
 
-        // 🩺 Overlay for details
         overlayPanel = new JPanel(new BorderLayout());
         overlayPanel.setVisible(false);
 
-        // 🔘 Action: Search button click
         searchButton.addActionListener(e -> searchPatients());
 
-        // 🔍 Action: Enter key triggers search
         searchField.addActionListener(e -> searchPatients());
 
-        // 🖱️ Double-click patient -> open details
         resultsList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -94,11 +88,9 @@ public class SearchPatientsScreen extends JPanel {
             }
         });
 
-        // Initial Load: all patients
         loadAllPatients();
     }
 
-    /** Fetches all patients from the database initially */
     private void loadAllPatients() {
         listModel.clear();
         List<Patient> patients = PatientDAO.getAllPatients();
@@ -112,11 +104,10 @@ public class SearchPatientsScreen extends JPanel {
             String label = String.format("%s - %s (%d, %s)",
                     p.getID(), p.getName(), p.getAge(), p.getGender());
             listModel.addElement(label);
-            resultsList.putClientProperty(label, p); // store actual Patient object
+            resultsList.putClientProperty(label, p);
         }
     }
 
-    /** Filters patients based on query input */
     private void searchPatients() {
         String query = searchField.getText().trim().toLowerCase();
         listModel.clear();
@@ -141,7 +132,6 @@ public class SearchPatientsScreen extends JPanel {
         }
     }
 
-    /** Opens detailed patient screen overlay */
     private void openPatientDetails(Patient patient) {
         overlayPanel.removeAll();
 

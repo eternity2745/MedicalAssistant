@@ -39,7 +39,7 @@ public class Register extends JPanel {
         registerPanel.setOpaque(true);
         registerPanel.setBackground(new Color(255, 255, 255, 230));
         registerPanel.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
-        registerPanel.setPreferredSize(new Dimension(520, 800)); // taller for more fields
+        registerPanel.setPreferredSize(new Dimension(520, 800));
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;

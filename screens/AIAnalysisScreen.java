@@ -40,7 +40,6 @@ public class AIAnalysisScreen extends JPanel {
         setLayout(new BorderLayout());
         setOpaque(false);
 
-        // Gradient background panel
         JPanel gradientPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -240,7 +239,6 @@ public class AIAnalysisScreen extends JPanel {
 
             resultArea.setText("Analyzing patient ID: " + patientId + "...\n\nPlease wait...");
 
-            // Run AI analysis in a background thread so UI doesn't freeze
             new Thread(() -> {
                 try {
                     AIAnalysisManager ai = new AIAnalysisManager();

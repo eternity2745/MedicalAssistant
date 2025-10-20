@@ -49,7 +49,7 @@ public class PatientDetailsScreen extends JPanel {
         mainPanel.setOpaque(false);
         JScrollPane scrollPane = new JScrollPane(mainPanel);
         scrollPane.setBorder(null);
-        scrollPane.getVerticalScrollBar().setUnitIncrement(16); // smoother scrolling
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
         JPanel topPanel = new JPanel();
@@ -58,9 +58,9 @@ public class PatientDetailsScreen extends JPanel {
 
         CircularImagePanel imagePanel;
         try {
-            imagePanel = new CircularImagePanel(ImageIO.read(new File(profilePic))); // size 120px
+            imagePanel = new CircularImagePanel(ImageIO.read(new File(profilePic)));
         } catch (IOException e) {
-            imagePanel = new CircularImagePanel(null); // fallback if image not found
+            imagePanel = new CircularImagePanel(null);
             System.err.println("Error loading image: " + e.getMessage());
         }
         topPanel.add(imagePanel);
@@ -115,13 +115,12 @@ public class PatientDetailsScreen extends JPanel {
         visitLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainPanel.add(visitLabel);
 
-        // 🔹 Fetch from Database
         List<VisitRecord> history = HistoryDAO.getVisitHistoryByPatientID(patientID);
 
         if (history.isEmpty()) {
             JPanel noHistoryPanel = new JPanel();
             noHistoryPanel.setOpaque(false);
-            noHistoryPanel.setPreferredSize(new Dimension(visitTableWidth(), 250)); // same as table height
+            noHistoryPanel.setPreferredSize(new Dimension(visitTableWidth(), 250));
             noHistoryPanel.setLayout(new BoxLayout(noHistoryPanel, BoxLayout.Y_AXIS));
 
             JLabel noHistoryLabel = new JLabel("No visit history available for this patient.");
@@ -184,7 +183,7 @@ public class PatientDetailsScreen extends JPanel {
     }
 
     private int visitTableWidth() {
-        return 800; // or any width matching your UI layout
+        return 800;
     }
 
     private JLabel createLabel(String text) {
