@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 D:\Java\MedicalAssistant\database\PatientDAO.java
 D:\Java\MedicalAssistant\screens\Login.java
 D:\Java\MedicalAssistant\utilities\AIAnalysisManager.java
@@ -25,31 +24,3 @@ D:\Java\MedicalAssistant\screens\PatientDetailsScreen.java
 D:\Java\MedicalAssistant\utilities\Patient.java
 D:\Java\MedicalAssistant\screens\SearchPatientsScreen.java
 D:\Java\MedicalAssistant\utilities\AIAnalyzer.java
-=======
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\screens\AIAnalysisScreen.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\screens\Login.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\screens\Dashboard.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\utilities\CircularImagePanel.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\utilities\Patient.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\utilities\DocumentAnalysis.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\utilities\Doctor.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\utilities\SymptomAnalyzer.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\utilities\GradientPanel.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\utilities\User.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\database\DatabaseConnection.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\screens\Register.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\utilities\ModelProvider.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\database\PatientDAO.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\screens\PatientDetailsScreen.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\screens\ProfileScreen.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\screens\WelcomePage.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\screens\SearchPatientsScreen.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\database\DoctorDAO.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\screens\HomePage.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\app\MainApp.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\utilities\ImageAnalysis.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\utilities\AIAnalyzer.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\utilities\DoctorSession.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\utilities\PDFUtils.java
-C:\Users\ASUS\Desktop\oops_pro\MedicalAssistant\utilities\AIAnalysisManager.java
->>>>>>> ebbace236a1b4fdfb0e93c16e804c3699011e5fd
