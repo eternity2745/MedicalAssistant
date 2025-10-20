@@ -1,17 +1,32 @@
 package screens;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.io.File;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
+
 import utilities.CircularImagePanel;
 
 // Class For Showing Patient Details
 public class PatientDetailsScreen extends JPanel {
 
-    public PatientDetailsScreen(String patientName, String dob, String gender, String contact, String bloodGroup, JScrollPane scrlPane, JPanel searchPanel, JPanel searchPatients, JPanel overPanel) {
+    public PatientDetailsScreen(String patientName, int age, String profilePic, String dob, String gender, String contact, String bloodGroup, String allergies, String medications, String conditions, String address, JScrollPane scrlPane, JPanel searchPanel, JPanel searchPatients, JPanel overPanel) {
         setLayout(new BorderLayout());
         setBackground(new Color(10, 25, 70));
 
@@ -40,7 +55,7 @@ public class PatientDetailsScreen extends JPanel {
 
         CircularImagePanel imagePanel;
         try {
-            imagePanel = new CircularImagePanel(ImageIO.read(new File("D:\\Java\\MedicalAssistant\\Resources\\Images\\doctorProfile.jpg"))); // size 120px
+            imagePanel = new CircularImagePanel(ImageIO.read(new File(profilePic))); // size 120px
         } catch (IOException e) {
             imagePanel = new CircularImagePanel(null); // fallback if image not found
             System.err.println("Error loading image: " + e.getMessage());
@@ -54,6 +69,9 @@ public class PatientDetailsScreen extends JPanel {
         JLabel nameLabel = new JLabel("Name: " + patientName);
         nameLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
         nameLabel.setForeground(Color.WHITE);
+        JLabel ageLabel = new JLabel("Age: " + age);
+        ageLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        ageLabel.setForeground(Color.WHITE);
         JLabel dobLabel = new JLabel("DOB: " + dob);
         dobLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         dobLabel.setForeground(Color.WHITE);
@@ -62,6 +80,8 @@ public class PatientDetailsScreen extends JPanel {
         genderLabel.setForeground(Color.WHITE);
 
         infoPanel.add(nameLabel);
+        infoPanel.add(Box.createVerticalStrut(10));
+        infoPanel.add(ageLabel);
         infoPanel.add(Box.createVerticalStrut(10));
         infoPanel.add(dobLabel);
         infoPanel.add(Box.createVerticalStrut(10));
@@ -78,10 +98,10 @@ public class PatientDetailsScreen extends JPanel {
 
         detailsPanel.add(createLabel("Contact: " + contact));
         detailsPanel.add(createLabel("Blood Group: " + bloodGroup));
-        detailsPanel.add(createLabel("Allergies: None"));
-        detailsPanel.add(createLabel("Existing Conditions: Hypertension"));
-        detailsPanel.add(createLabel("Medications: None"));
-        detailsPanel.add(createLabel("Address: 123, Main Street"));
+        detailsPanel.add(createLabel("Allergies: " + allergies));
+        detailsPanel.add(createLabel("Existing Conditions: " + conditions));
+        detailsPanel.add(createLabel("Medications: " + medications));
+        detailsPanel.add(createLabel("Address: " + address));
 
         mainPanel.add(detailsPanel);
 
@@ -92,14 +112,14 @@ public class PatientDetailsScreen extends JPanel {
         visitLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // center horizontally
         mainPanel.add(visitLabel);
 
-        String[] columns = {"Date", "Reason", "Doctor"};
+        String[] columns = {"Date", "Disease", "Doctor", "Hospital"};
         String[][] data = {
-            {"2025-01-12", "Routine Checkup", "Dr. Smith"},
-            {"2025-03-05", "Blood Test", "Dr. Johnson"},
-            {"2025-05-20", "Follow-up", "Dr. Smith"},
-            {"2025-01-12", "Routine Checkup", "Dr. Smith"},
-            {"2025-03-05", "Blood Test", "Dr. Johnson"},
-            {"2025-05-20", "Follow-up", "Dr. Smith"}
+            {"2025-01-12", "Routine Checkup", "Dr. Smith", ""},
+            {"2025-03-05", "Blood Test", "Dr. Johnson", ""},
+            {"2025-05-20", "Follow-up", "Dr. Smith", ""},
+            {"2025-01-12", "Routine Checkup", "Dr. Smith", ""},
+            {"2025-03-05", "Blood Test", "Dr. Johnson", ""},
+            {"2025-05-20", "Follow-up", "Dr. Smith", ""}
         };
 
         JTable visitTable = new JTable(data, columns) {

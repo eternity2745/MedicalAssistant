@@ -147,11 +147,16 @@ public class SearchPatientsScreen extends JPanel {
 
         PatientDetailsScreen detailsScreen = new PatientDetailsScreen(
                 patient.getName(),
+                patient.getAge(),
+                patient.getProfilePic(),
                 patient.getDob(),
                 patient.getGender(),
                 patient.getPhone(),
                 patient.getBloodGroup(),
-
+                patient.getAllergies(),
+                patient.getMedications(),
+                patient.getCondition(),
+                patient.getAddress(),
                 scrollPane,
                 searchPanel,
                 this,
