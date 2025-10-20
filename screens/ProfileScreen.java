@@ -1,17 +1,35 @@
 package screens;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.image.BufferedImage;
 import java.io.File;
+
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+
 import utilities.CircularImagePanel;
+import utilities.Doctor;
+import utilities.DoctorSession;
 
 //Class for showing Profile Of Doctor
 public class ProfileScreen extends JPanel {
 
     public ProfileScreen() {
+
+        Doctor doctor = DoctorSession.getCurrentDoctor();
         setLayout(new BorderLayout());
         setOpaque(false);
 
@@ -30,7 +48,7 @@ public class ProfileScreen extends JPanel {
 
         BufferedImage img = null;
         try {
-            img = ImageIO.read(new File("Resources\\Images\\doctorProfile.jpg"));
+            img = ImageIO.read(new File(doctor.getProfilePic()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -52,11 +70,11 @@ public class ProfileScreen extends JPanel {
         gbc.anchor = GridBagConstraints.WEST;
 
         String[][] details = {
-                {"Name:", "Dr. John Doe"},
-                {"Specialization:", "Cardiologist"},
-                {"Email:", "johndoe@example.com"},
-                {"Phone:", "+91 9876543210"},
-                {"Hospital:", "City Hospital"}
+                {"Name:", "Dr. " + doctor.getName()},
+                {"Specialization:", doctor.getSpecialization()},
+                {"Email:", doctor.getEmail()},
+                {"Phone:", doctor.getPhone()},
+                {"Hospital:", doctor.getHospital()}
         };
 
         for (int i = 0; i < details.length; i++) {

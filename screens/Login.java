@@ -1,9 +1,30 @@
 package screens;
 
-import java.awt.*;
-import javax.swing.*;
-import database.DoctorDAO;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.RenderingHints;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
 import app.MainApp;
+import database.DoctorDAO;
+import utilities.Doctor;
+import utilities.DoctorSession;
 
 
 // Class For Login Page
@@ -86,12 +107,13 @@ public class Login extends JPanel {
         return;
     }
 
-    boolean isValid = DoctorDAO.validateLogin(email, password);
-
-    if(isValid) {
+    Doctor loggedInDoctor = DoctorDAO.validateLogin(email, password);
+    if (loggedInDoctor != null) {
+        DoctorSession.setCurrentDoctor(loggedInDoctor);
         JOptionPane.showMessageDialog(this, "Login Successful!");
-        parent.showScreen("Dashboard");
-    } else {
+        parent.showDashboard();
+        // parent.showScreen("Dashboard");
+    }else{
         JOptionPane.showMessageDialog(this, "Invalid credentials!");
     }
 });

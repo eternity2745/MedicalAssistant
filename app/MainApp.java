@@ -18,6 +18,7 @@ public class MainApp extends JFrame {
 
     private JPanel mainPanel;
     private CardLayout cardLayout;
+    private Dashboard dashboardPanel; 
 
     public MainApp() {
         setTitle("MediGuide");
@@ -35,12 +36,11 @@ public class MainApp extends JFrame {
         WelcomePage welcomePanel = new WelcomePage(this);
         Login loginPanel = new Login(this);
         Register registerPanel = new Register(this);
-        Dashboard dashboardPanel = new Dashboard(this);
 
         mainPanel.add(welcomePanel, "Welcome");
         mainPanel.add(loginPanel, "Login");
         mainPanel.add(registerPanel, "Register");
-        mainPanel.add(dashboardPanel, "Dashboard");
+        // mainPanel.add(dashboardPanel, "Dashboard");
 
         add(mainPanel);
         setVisible(true);
@@ -48,6 +48,14 @@ public class MainApp extends JFrame {
 
     public void showScreen(String screenName) {
         cardLayout.show(mainPanel, screenName);
+    }
+
+    public void showDashboard() {
+        if (dashboardPanel == null) {
+            dashboardPanel = new Dashboard(this);
+            mainPanel.add(dashboardPanel, "Dashboard");
+        }
+        cardLayout.show(mainPanel, "Dashboard");
     }
 
     public static void main(String[] args) {

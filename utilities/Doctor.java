@@ -10,6 +10,9 @@ public class Doctor implements User {
     private String hospital;
     private String specialization;
     private int AIAnalysis;
+    private int totalPatients;
+    private int appointments;
+    private int pending;
 
     public Doctor(String name, String email, String phoneNumber, String password, String hospital ,String specialization) {
         this.name = name;
@@ -24,9 +27,21 @@ public class Doctor implements User {
 
     public void setID(int id) {this.id = id;}
 
+    public void setTotalPatients(int totalPatients) {this.totalPatients = totalPatients;}
+
+    public void setAppointments(int appointments) {this.appointments = appointments;}
+
+    public void setPending(int pending) {this.pending = pending;}
+
     public void setProfilePic(String profilePic) {this.profilePic = profilePic;}
 
     public void setAIAnalysis(int AIAnalysis) { this.AIAnalysis = AIAnalysis; }
+
+    public int getTotalPatients() {return totalPatients ;}
+
+    public int getAppointments() {return appointments ;}
+
+    public int getPending() {return pending ;}
 
     @Override
     public String getName() { return name; }
