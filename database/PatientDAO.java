@@ -77,6 +77,50 @@ public class PatientDAO {
         }
         return patients;
     }
+   public static boolean updatePatient(Patient patient) {
+    try (Connection con = DatabaseConnection.getConnection();
+         PreparedStatement ps = con.prepareStatement(
+             "UPDATE patients SET age=?, medications=?, disease=? WHERE id=?")) {
+
+        ps.setInt(1, patient.getAge());
+        ps.setString(2, patient.getMedications());
+        ps.setString(3, patient.getCondition());
+        ps.setInt(4, patient.getID());
+
+        return ps.executeUpdate() > 0;
+    } catch (Exception e) {
+        e.printStackTrace();
+        return false;
+    }
+}
+public static Patient getPatientByID(int id) {
+    Patient patient = null;
+    try (Connection con = DatabaseConnection.getConnection();
+         PreparedStatement ps = con.prepareStatement("SELECT * FROM patients WHERE id=?")) {
+        ps.setInt(1, id);
+        var rs = ps.executeQuery();
+        if(rs.next()) {
+            patient = new Patient();
+            patient.setID(rs.getInt("id"));
+            patient.setName(rs.getString("name"));
+            patient.setAge(rs.getInt("age"));
+            patient.setEmail(rs.getString("email"));
+            patient.setGender(rs.getString("gender"));
+            patient.setDob(rs.getString("dob"));
+            patient.setPhone(rs.getString("phone"));
+            patient.setAllergies(rs.getString("allergies"));
+            patient.setMedications(rs.getString("medications"));
+            patient.setBloodGroup(rs.getString("blood_group"));
+            patient.setCondition(rs.getString("disease"));
+            patient.setAddress(rs.getString("address"));
+        }
+    } catch(Exception e) {
+        e.printStackTrace();
+    }
+    return patient;
+}
+
+
 }
 
 
