@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import utilities.Doctor;
@@ -45,34 +47,69 @@ public class DoctorDAO {
     }
 
     public static Doctor validateLogin(String email, String password) {
-    String query = "SELECT * FROM doctors WHERE email = ? AND password = ?";
+        String query = "SELECT * FROM doctors WHERE email = ? AND password = ?";
 
-    try (Connection conn = DatabaseConnection.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(query)) {
 
-        stmt.setString(1, email);
-        stmt.setString(2, password);
+            stmt.setString(1, email);
+            stmt.setString(2, password);
 
-        var rs = stmt.executeQuery();
-        if (rs.next()) {
-            // Create and fill Doctor object
-            Doctor doctor = new Doctor(rs.getString("name"), rs.getString("email"), rs.getString("phone"), rs.getString("password"), rs.getString("hospital"), rs.getString("specialization"));
-            doctor.setID(rs.getInt("id"));
-            doctor.setProfilePic(rs.getString("profilePic"));
-            doctor.setAIAnalysis(rs.getInt("AI"));
-            doctor.setTotalPatients(getTodaysAppointments(conn, rs.getInt("id")));
-            doctor.setTotalPatients(getPendingReports(conn, rs.getInt("id")));
-            doctor.setTotalPatients(getTotalPatients(conn, rs.getInt("id")));
-            // Add other fields if any
-            return doctor;
+            var rs = stmt.executeQuery();
+            if (rs.next()) {
+                // Create and fill Doctor object
+                Doctor doctor = new Doctor(rs.getString("name"), rs.getString("email"), rs.getString("phone"), rs.getString("password"), rs.getString("hospital"), rs.getString("specialization"));
+                doctor.setID(rs.getInt("id"));
+                doctor.setProfilePic(rs.getString("profilePic"));
+                doctor.setAIAnalysis(rs.getInt("AI"));
+                doctor.setTotalPatients(getTodaysAppointments(conn, rs.getInt("id")));
+                doctor.setTotalPatients(getPendingReports(conn, rs.getInt("id")));
+                doctor.setTotalPatients(getTotalPatients(conn, rs.getInt("id")));
+                // Add other fields if any
+                return doctor;
+            }
+            return null; // returns true if a match is found
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
-        return null; // returns true if a match is found
-
-    } catch (SQLException e) {
-        e.printStackTrace();
-        return null;
     }
-}
+
+    public static List<Object[]> getRecentPatients(int doctorId) {
+        List<Object[]> recentPatients = new ArrayList<>();
+
+        String query = """
+            SELECT p.name, p.age, p.gender, p.condition
+            FROM history h
+            JOIN patients p ON h.patientID = p.id
+            WHERE h.doctorID = ? AND h.completed = 'T'
+            ORDER BY h.date DESC
+            LIMIT 10
+        """;
+
+        try (Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, doctorId);
+            var rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Object[] row = {
+                    rs.getString("name"),
+                    rs.getInt("age"),
+                    rs.getString("gender"),
+                    rs.getString("condition")
+                };
+                recentPatients.add(row);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return recentPatients;
+    }
 
     private static int getTodaysAppointments(Connection conn, int doctorId) throws SQLException {
         String sql = "SELECT COUNT(*) FROM history WHERE doctorID = ? AND date = CURDATE()";
