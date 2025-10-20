@@ -2,8 +2,11 @@ package database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
+import java.util.List;
 
 import utilities.Patient;
 
@@ -77,48 +80,109 @@ public class PatientDAO {
         }
         return patients;
     }
-   public static boolean updatePatient(Patient patient) {
-    try (Connection con = DatabaseConnection.getConnection();
-         PreparedStatement ps = con.prepareStatement(
-             "UPDATE patients SET age=?, medications=?, disease=? WHERE id=?")) {
 
-        ps.setInt(1, patient.getAge());
-        ps.setString(2, patient.getMedications());
-        ps.setString(3, patient.getCondition());
-        ps.setInt(4, patient.getID());
+    public static List<Patient> getAllPatients() {
+        List<Patient> list = new ArrayList<>();
+        String query = "SELECT * FROM patients ORDER BY name LIMIT 10";
 
-        return ps.executeUpdate() > 0;
-    } catch (Exception e) {
-        e.printStackTrace();
-        return false;
-    }
-}
-public static Patient getPatientByID(int id) {
-    Patient patient = null;
-    try (Connection con = DatabaseConnection.getConnection();
-         PreparedStatement ps = con.prepareStatement("SELECT * FROM patients WHERE id=?")) {
-        ps.setInt(1, id);
-        var rs = ps.executeQuery();
-        if(rs.next()) {
-            patient = new Patient();
-            patient.setID(rs.getInt("id"));
-            patient.setName(rs.getString("name"));
-            patient.setAge(rs.getInt("age"));
-            patient.setEmail(rs.getString("email"));
-            patient.setGender(rs.getString("gender"));
-            patient.setDob(rs.getString("dob"));
-            patient.setPhone(rs.getString("phone"));
-            patient.setAllergies(rs.getString("allergies"));
-            patient.setMedications(rs.getString("medications"));
-            patient.setBloodGroup(rs.getString("blood_group"));
-            patient.setCondition(rs.getString("disease"));
-            patient.setAddress(rs.getString("address"));
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                list.add(mapPatient(rs));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch(Exception e) {
-        e.printStackTrace();
+        return list;
     }
-    return patient;
-}
+
+    public static List<Patient> searchPatientsScreen(String query) {
+        List<Patient> list = new ArrayList<>();
+        String sql = "SELECT * FROM patients WHERE LOWER(name) LIKE ? OR LOWER(id) LIKE ? OR phone LIKE ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            String like = "%" + query + "%";
+            stmt.setString(1, like);
+            stmt.setString(2, like);
+            stmt.setString(3, like);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                list.add(mapPatient(rs));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+
+    private static Patient mapPatient(ResultSet rs) throws SQLException {
+        Patient patient = new Patient();
+        patient.setID(rs.getInt("id"));
+        patient.setAge(rs.getInt("age"));
+        patient.setName(rs.getString("name"));
+        patient.setDob(rs.getString("dob"));
+        patient.setPhone(rs.getString("phone"));
+        patient.setAllergies(rs.getString("allergies"));
+        patient.setAddress(rs.getString("address"));
+        patient.setBloodGroup(rs.getString("bloodGroup"));
+        patient.setCondition(rs.getString("disease"));
+        patient.setGender(rs.getString("gender"));
+        patient.setProfilePic(rs.getString("profilePic"));
+        patient.setEmail(rs.getString("email"));
+        patient.setMedications(rs.getString("medications"));
+        return patient;
+    }
+
+    public static boolean updatePatient(Patient patient) {
+        try (Connection con = DatabaseConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement(
+                "UPDATE patients SET age=?, medications=?, disease=? WHERE id=?")) {
+
+            ps.setInt(1, patient.getAge());
+            ps.setString(2, patient.getMedications());
+            ps.setString(3, patient.getCondition());
+            ps.setInt(4, patient.getID());
+
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public static Patient getPatientByID(int id) {
+        Patient patient = null;
+        try (Connection con = DatabaseConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM patients WHERE id=?")) {
+            ps.setInt(1, id);
+            var rs = ps.executeQuery();
+            if(rs.next()) {
+                patient = new Patient();
+                patient.setID(rs.getInt("id"));
+                patient.setName(rs.getString("name"));
+                patient.setAge(rs.getInt("age"));
+                patient.setEmail(rs.getString("email"));
+                patient.setGender(rs.getString("gender"));
+                patient.setDob(rs.getString("dob"));
+                patient.setPhone(rs.getString("phone"));
+                patient.setAllergies(rs.getString("allergies"));
+                patient.setMedications(rs.getString("medications"));
+                patient.setBloodGroup(rs.getString("blood_group"));
+                patient.setCondition(rs.getString("disease"));
+                patient.setAddress(rs.getString("address"));
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return patient;
+    }
 
 
 }
