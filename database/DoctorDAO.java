@@ -43,7 +43,8 @@ public class DoctorDAO {
             return false;
         }
     }
-    public static boolean validateLogin(String email, String password) {
+
+    public static Doctor validateLogin(String email, String password) {
     String query = "SELECT * FROM doctors WHERE email = ? AND password = ?";
 
     try (Connection conn = DatabaseConnection.getConnection();
@@ -53,12 +54,51 @@ public class DoctorDAO {
         stmt.setString(2, password);
 
         var rs = stmt.executeQuery();
-        return rs.next(); // returns true if a match is found
+        if (rs.next()) {
+            // Create and fill Doctor object
+            Doctor doctor = new Doctor(rs.getString("name"), rs.getString("email"), rs.getString("phone"), rs.getString("password"), rs.getString("hospital"), rs.getString("specialization"));
+            doctor.setID(rs.getInt("id"));
+            doctor.setProfilePic(rs.getString("profilePic"));
+            doctor.setAIAnalysis(rs.getInt("AI"));
+            doctor.setTotalPatients(getTodaysAppointments(conn, rs.getInt("id")));
+            doctor.setTotalPatients(getPendingReports(conn, rs.getInt("id")));
+            doctor.setTotalPatients(getTotalPatients(conn, rs.getInt("id")));
+            // Add other fields if any
+            return doctor;
+        }
+        return null; // returns true if a match is found
 
     } catch (SQLException e) {
         e.printStackTrace();
-        return false;
+        return null;
     }
 }
+
+    private static int getTodaysAppointments(Connection conn, int doctorId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM history WHERE doctorID = ? AND date = CURDATE()";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, doctorId);
+            var rs = stmt.executeQuery();
+            return rs.next() ? rs.getInt(1) : 0;
+        }
+    }
+
+    private static int getTotalPatients(Connection conn, int doctorId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM history WHERE doctorID = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, doctorId);
+            var rs = stmt.executeQuery();
+            return rs.next() ? rs.getInt(1) : 0;
+        }
+    }
+
+    private static int getPendingReports(Connection conn, int doctorId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM history WHERE doctorID = ? AND completed = 'F'";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, doctorId);
+            var rs = stmt.executeQuery();
+            return rs.next() ? rs.getInt(1) : 0;
+        }
+    }
 
 }

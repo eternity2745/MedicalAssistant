@@ -14,6 +14,7 @@ screens\HomePage.class
 screens\AIAnalysisScreen$1.class
 screens\PatientDetailsScreen.class
 app\MainApp.class
+utilities\DoctorSession.class
 screens\PatientDetailsScreen$1.class
 screens\SearchPatientsScreen$2.class
 utilities\AIAnalysisManager.class
