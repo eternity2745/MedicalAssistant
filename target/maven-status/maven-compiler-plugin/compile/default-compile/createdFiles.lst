@@ -1,6 +1,7 @@
 screens\Dashboard$1.class
 utilities\CircularImagePanel.class
 utilities\ModelProvider.class
+screens\HomePage$2.class
 database\DoctorDAO.class
 screens\SearchPatientsScreen$1.class
 screens\SearchPatientsScreen.class
@@ -17,6 +18,7 @@ app\MainApp.class
 screens\PatientDetailsScreen$1.class
 screens\SearchPatientsScreen$2.class
 utilities\AIAnalysisManager.class
+utilities\Patient.class
 screens\WelcomePage$1.class
 utilities\ImageAnalysis.class
 utilities\SymptomAnalyzer.class
@@ -29,4 +31,5 @@ screens\AIAnalysisScreen.class
 database\DatabaseConnection.class
 screens\HomePage$1.class
 screens\Register.class
+database\PatientDAO.class
 utilities\AIAnalyzer.class

@@ -57,7 +57,7 @@ public class MainApp extends JFrame {
         });
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            DatabaseConnection.closeConnection();
+           DatabaseConnection.closeConnection();
         }));
     }
 }
