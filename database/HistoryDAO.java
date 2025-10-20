@@ -2,6 +2,9 @@ package database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,6 +14,25 @@ import utilities.VisitRecord;
 
 public class HistoryDAO {
 
+    // --- Insert new history record when patient is registered ---
+    public static void addHistoryRecord(int patientID, int doctorID, String disease, String hospital) {
+        String query = "INSERT INTO history (patientID, doctorID, date, disease, hospital, completed) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, patientID);
+            ps.setInt(2, doctorID);
+            ps.setDate(3, Date.valueOf(LocalDate.now())); // current date
+            ps.setString(4, disease);
+            ps.setString(5, hospital);
+            ps.setString(6, "N"); // N = not completed yet
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public static List<VisitRecord> getVisitHistoryByPatientID(int patientID) {
         List<VisitRecord> visits = new ArrayList<>();
 
@@ -39,7 +61,6 @@ public class HistoryDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return visits;
+         return visits;
     }
 }

@@ -9,9 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import utilities.Patient;
+import utilities.Doctor;
 
 public class PatientDAO {
+    
 
+    // ---------------- Register Patient ----------------
     public static boolean registerPatient(Patient patient) {
         String query = "INSERT INTO patients (id, name, age, profilePic, email, gender, dob, phone, allergies, medications, bloodGroup, disease, address) "
                      + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -51,6 +54,25 @@ public class PatientDAO {
             return false;
         }
     }
+
+    // --- Overloaded version (doctor + patient) ---
+    // --- Overloaded version (doctor + patient) ---
+public static boolean registerPatient(Patient patient, int doctorID) {
+    boolean registered = registerPatient(patient);
+    if (registered) {
+        Doctor doctor = DoctorDAO.getDoctorByID(doctorID); // fetch the doctor
+        String hospital = (doctor != null && doctor.getHospital() != null) ? doctor.getHospital() : "Unknown";
+        
+        HistoryDAO.addHistoryRecord(
+            patient.getID(),
+            doctorID,
+            patient.getCondition(),
+            hospital
+        );
+    }
+    return registered;
+}
+
 
     // ---------------- Search Patients ----------------
     public static java.util.List<Patient> searchPatients(String keyword) {
@@ -157,33 +179,41 @@ public class PatientDAO {
             return false;
         }
     }
+    
+
+    // ---------------- Get Patient By ID ----------------
     public static Patient getPatientByID(int id) {
         Patient patient = null;
         try (Connection con = DatabaseConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM patients WHERE id=?")) {
+             PreparedStatement ps = con.prepareStatement("SELECT * FROM patients WHERE id=?")) {
             ps.setInt(1, id);
             var rs = ps.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 patient = new Patient();
                 patient.setID(rs.getInt("id"));
                 patient.setName(rs.getString("name"));
                 patient.setAge(rs.getInt("age"));
                 patient.setEmail(rs.getString("email"));
                 patient.setGender(rs.getString("gender"));
-                patient.setDob(rs.getString("dob"));
+                patient.setDob(rs.getDate("dob").toString());
                 patient.setPhone(rs.getString("phone"));
                 patient.setAllergies(rs.getString("allergies"));
                 patient.setMedications(rs.getString("medications"));
-                patient.setBloodGroup(rs.getString("blood_group"));
+                patient.setBloodGroup(rs.getString("bloodGroup"));
                 patient.setCondition(rs.getString("disease"));
                 patient.setAddress(rs.getString("address"));
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return patient;
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 60a5c330bd8038385c1efd4d26ff8e84d93f3389
 }
+
+
 
 
