@@ -27,8 +27,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import database.DoctorDAO;
 import database.PatientDAO;
 import utilities.AIAnalysisManager;
+import utilities.DoctorSession;
 
 public class AIAnalysisScreen extends JPanel {
 
@@ -196,11 +198,13 @@ public class AIAnalysisScreen extends JPanel {
 
                         SwingUtilities.invokeLater(() -> {
                             resultArea.setText("Analysis for patient ID: " + patientId + "\n\n" + result);
+                            DoctorDAO.updateAIAccess(DoctorSession.getCurrentDoctor().getID());
                         });
                     } catch (Exception ex) {
                         ex.printStackTrace();
-                        SwingUtilities.invokeLater(() -> 
-                            resultArea.setText("Error during AI analysis:\n" + ex.getMessage())
+                        SwingUtilities.invokeLater(() -> {
+                            resultArea.setText("Error during AI analysis:\n" + ex.getMessage());
+                        }
                         );
                     }
                 }).start();
@@ -246,11 +250,13 @@ public class AIAnalysisScreen extends JPanel {
 
                         SwingUtilities.invokeLater(() -> {
                             resultArea.setText("Analysis for patient ID: " + patientId + "\n\n" + result);
+                            DoctorDAO.updateAIAccess(DoctorSession.getCurrentDoctor().getID());
                         });
                     } catch (Exception ex) {
                         ex.printStackTrace();
-                        SwingUtilities.invokeLater(() -> 
-                            resultArea.setText("Error during AI analysis:\n" + ex.getMessage())
+                        SwingUtilities.invokeLater(() -> {
+                            resultArea.setText("Error during AI analysis:\n" + ex.getMessage());
+                        }
                         );
                     }
                 }).start();
@@ -290,11 +296,13 @@ public class AIAnalysisScreen extends JPanel {
 
                     SwingUtilities.invokeLater(() -> {
                         resultArea.setText("Analysis for patient ID: " + patientId + "\n\n" + result);
+                        DoctorDAO.updateAIAccess(DoctorSession.getCurrentDoctor().getID());
                     });
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                    SwingUtilities.invokeLater(() -> 
-                        resultArea.setText("Error during AI analysis:\n" + ex.getMessage())
+                    SwingUtilities.invokeLater(() -> {
+                        resultArea.setText("Error during AI analysis:\n" + ex.getMessage());
+                    }
                     );
                 }
                 }).start();

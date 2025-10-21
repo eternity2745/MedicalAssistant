@@ -76,6 +76,18 @@ public class DoctorDAO {
         }
     }
 
+    public static void updateAIAccess(int doctorId) {
+        String query = "UPDATE doctors SET AI = AI + 1 WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, doctorId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public static List<Object[]> getRecentPatients(int doctorId) {
         List<Object[]> recentPatients = new ArrayList<>();
 
