@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import utilities.VisitRecord;
+import utilities.History;
 
 public class HistoryDAO {
 
@@ -63,10 +63,10 @@ public class HistoryDAO {
         e.printStackTrace();
     }}
     
-    public static List<VisitRecord> getVisitHistoryByPatientID(int patientID) {
-        List<VisitRecord> visits = new ArrayList<>();
+    public static List<History> getVisitHistoryByPatientID(int patientID) {
+        List<History> visits = new ArrayList<>();
 
-        String query = "SELECT h.date, h.disease, d.name AS doctors, h.hospital " +
+        String query = "SELECT h.date, h.disease, d.name AS doctor, h.hospital " +
                        "FROM history h " +
                        "JOIN doctors d ON h.doctorID = d.id " +
                        "WHERE h.patientID = ? AND h.completed = 'T' " +
@@ -79,12 +79,11 @@ public class HistoryDAO {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                VisitRecord record = new VisitRecord(
-                    rs.getString("date"),
-                    rs.getString("disease"),
-                    rs.getString("doctor"),
-                    rs.getString("hospital")
-                );
+                History record = new History();
+                record.setDate(rs.getString("date"));
+                record.setDisease(rs.getString("disease"));
+                record.setHospital(rs.getString("hospital"));
+                record.setDoctorName(rs.getString("doctor"));
                 visits.add(record);
             }
 
@@ -93,5 +92,63 @@ public class HistoryDAO {
         }
          return visits;
     }
-     
+
+    public static List<History> getPendingReports() {
+    List<History> reports = new ArrayList<>();
+    String query = "SELECT * FROM history WHERE completed = 'F'";
+    try (Connection conn = DatabaseConnection.getConnection();
+         PreparedStatement ps = conn.prepareStatement(query);
+         ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+            History history = new History();
+            history.setPatientID(rs.getInt("patientID"));
+            history.setDoctorID(rs.getInt("doctorID"));
+            history.setDate(rs.getString("date"));
+            history.setHospital(rs.getString("hospital"));
+            history.setCompleted(rs.getString("completed"));
+            history.setDisease(rs.getString("disease"));
+            reports.add(history);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return reports;
+}
+
+    public static List<History> searchPendingReports(String keyword) {
+        List<History> reports = new ArrayList<>();
+        String query = "SELECT * FROM history WHERE completed = 'F' AND (patientID LIKE ?)";
+        try (Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, "%" + keyword + "%");
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    History history = new History();
+                    history.setPatientID(rs.getInt("patientID"));
+                    history.setDoctorID(rs.getInt("doctorID"));
+                    history.setDate(rs.getString("date"));
+                    history.setHospital(rs.getString("hospital"));
+                    history.setCompleted(rs.getString("completed"));
+                    history.setDisease(rs.getString("disease"));
+                    reports.add(history);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return reports;
+    }
+
+    public static void markReportCompleted(int patientID, int doctorID) {
+        String query = "UPDATE history SET completed = 'T' WHERE completed = 'F' AND patientID = ? AND doctorID = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, patientID);
+            ps.setInt(2, doctorID);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

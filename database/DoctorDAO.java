@@ -62,9 +62,9 @@ public class DoctorDAO {
                 doctor.setID(rs.getInt("id"));
                 doctor.setProfilePic(rs.getString("profilePic"));
                 doctor.setAIAnalysis(rs.getInt("AI"));
-                doctor.setTotalPatients(getTodaysAppointments(conn, rs.getInt("id")));
-                doctor.setTotalPatients(getPendingReports(conn, rs.getInt("id")));
                 doctor.setTotalPatients(getTotalPatients(conn, rs.getInt("id")));
+                doctor.setPending(getPendingReports(conn, rs.getInt("id")));
+                doctor.setAppointments(getTodaysAppointments(conn, rs.getInt("id")));
                 // Add other fields if any
                 return doctor;
             }
@@ -80,7 +80,7 @@ public class DoctorDAO {
         List<Object[]> recentPatients = new ArrayList<>();
 
         String query = """
-            SELECT p.name, p.age, p.gender, p.disease
+            SELECT p.name, p.age, p.gender, h.disease, h.date
             FROM history h
             JOIN patients p ON h.patientID = p.id
             WHERE h.doctorID = ? AND h.completed = 'T'
@@ -99,7 +99,8 @@ public class DoctorDAO {
                     rs.getString("name"),
                     rs.getInt("age"),
                     rs.getString("gender"),
-                    rs.getString("disease")
+                    rs.getString("disease"),
+                    // rs.getString("date")
                 };
                 recentPatients.add(row);
             }
@@ -110,6 +111,7 @@ public class DoctorDAO {
 
         return recentPatients;
     }
+
 
     private static int getTodaysAppointments(Connection conn, int doctorId) throws SQLException {
         String sql = "SELECT COUNT(*) FROM history WHERE doctorID = ? AND date = CURDATE()";
