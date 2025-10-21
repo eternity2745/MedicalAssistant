@@ -155,7 +155,7 @@ public class HomePage extends JPanel {
         pendingRprtsBtn.setFocusPainted(false);
 
         buttonPanel.add(addPatientBtn);
-        buttonPanel.add(aiAnalysisBtn);
+        buttonPanel.add(pendingRprtsBtn);
         mainPanel.add(buttonPanel);
 
         // ----- Add Patient Button -----
@@ -413,15 +413,12 @@ public class HomePage extends JPanel {
             selectionDialog.setVisible(true);
         });
 
-<<<<<<< HEAD
-=======
         pendingRprtsBtn.addActionListener(e -> new PendingReportsWindow());
 
         buttonPanel.add(addPatientBtn);
         buttonPanel.add(pendingRprtsBtn);
         mainPanel.add(buttonPanel);
 
->>>>>>> ba9f14cac99310e4dce4820c5cadc59c03540432
         JScrollPane scrollPane = new JScrollPane(mainPanel);
         scrollPane.setBorder(null);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
