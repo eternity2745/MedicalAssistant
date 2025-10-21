@@ -179,6 +179,21 @@ public class PatientDAO {
         return list;
     }
 
+    public static boolean doesPatientExist(int patientId) {
+        String query = "SELECT 1 FROM patients WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, patientId);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
 
     private static Patient mapPatient(ResultSet rs) throws SQLException {
         Patient patient = new Patient();

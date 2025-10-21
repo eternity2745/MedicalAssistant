@@ -27,6 +27,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import database.PatientDAO;
 import utilities.AIAnalysisManager;
 
 public class AIAnalysisScreen extends JPanel {
@@ -163,6 +164,21 @@ public class AIAnalysisScreen extends JPanel {
                 JOptionPane.showMessageDialog(this, "Please enter Patient ID!");
                 return;
             }
+
+            int pid;
+            try {
+                pid = Integer.parseInt(patientId);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Invalid Patient ID format!");
+                return;
+            }
+
+            // Check if patient exists
+            if (!PatientDAO.doesPatientExist(pid)) {
+                JOptionPane.showMessageDialog(this, "No patient found with ID: " + pid);
+                return;
+            }
+
             JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
             JFileChooser chooser = new JFileChooser();
             chooser.setDialogTitle("Select Patient Image");
@@ -200,6 +216,20 @@ public class AIAnalysisScreen extends JPanel {
                 return;
             }
 
+            int pid;
+            try {
+                pid = Integer.parseInt(patientId);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Invalid Patient ID format!");
+                return;
+            }
+
+            // Check if patient exists
+            if (!PatientDAO.doesPatientExist(pid)) {
+                JOptionPane.showMessageDialog(this, "No patient found with ID: " + pid);
+                return;
+            }
+
             JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
             JFileChooser chooser = new JFileChooser();
             chooser.setDialogTitle("Select Patient Report PDF");
@@ -234,6 +264,20 @@ public class AIAnalysisScreen extends JPanel {
 
             if (patientId.isEmpty() || symptoms.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please enter Patient ID and Symptoms!");
+                return;
+            }
+
+            int pid;
+            try {
+                pid = Integer.parseInt(patientId);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Invalid Patient ID format!");
+                return;
+            }
+
+            // Check if patient exists
+            if (!PatientDAO.doesPatientExist(pid)) {
+                JOptionPane.showMessageDialog(this, "No patient found with ID: " + pid);
                 return;
             }
 
