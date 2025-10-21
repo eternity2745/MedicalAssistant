@@ -123,7 +123,6 @@ public class DoctorDAO {
         return recentPatients;
     }
 
-
     private static int getTodaysAppointments(Connection conn, int doctorId) throws SQLException {
         String sql = "SELECT COUNT(*) FROM history WHERE doctorID = ? AND date = CURDATE()";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
