@@ -73,6 +73,8 @@ public class PatientDAO {
         return registered;
     }
 
+    
+
 
     // ---------------- Search Patients ----------------
     public static java.util.List<Patient> searchPatients(String keyword) {
@@ -90,6 +92,7 @@ public class PatientDAO {
             while (rs.next()) {
                 Patient p = new Patient();
                 p.setID(rs.getInt("id"));
+                p.setAge(rs.getInt("age"));
                 p.setName(rs.getString("name"));
                 p.setEmail(rs.getString("email"));
                 p.setGender(rs.getString("gender"));
@@ -102,6 +105,38 @@ public class PatientDAO {
         }
         return patients;
     }
+//     public static List<Patient> searchPatients(String keyword) {
+//     List<Patient> patients = new ArrayList<>();
+//     String sql = "SELECT p.id, p.name, p.age, p.gender, p.medications, h.disease, h.timestamp " +
+//                  "FROM patients p " +
+//                  "LEFT JOIN patient_history h ON p.id = h.patient_id " +
+//                  "WHERE (p.name LIKE ? OR p.email LIKE ?) " +
+//                  "AND h.id = (SELECT MAX(id) FROM patient_history WHERE patient_id = p.id)";
+
+//     try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+//         ps.setString(1, "%" + keyword + "%");
+//         ps.setString(2, "%" + keyword + "%");
+//         ResultSet rs = ps.executeQuery();
+
+//         while (rs.next()) {
+//             Patient p = new Patient();
+//             p.setID(rs.getInt("id"));
+//             p.setName(rs.getString("name"));
+//             p.setAge(rs.getInt("age"));
+//             p.setGender(rs.getString("gender"));
+//             p.setMedications(rs.getString("medications"));
+//             p.setCondition(rs.getString("disease"));  // only current disease
+//              // optional: store timestamp
+//             patients.add(p);
+//         }
+
+//     } catch (Exception e) {
+//         e.printStackTrace();
+//     }
+
+//     return patients;
+// }
+
 
     public static List<Patient> getAllPatients() {
         List<Patient> list = new ArrayList<>();
@@ -179,6 +214,19 @@ public class PatientDAO {
             return false;
         }
     }
+    public static boolean updatePatientWithHistory(Patient patient, int doctorID) {
+    boolean updated = updatePatient(patient);
+    if (updated) {
+        // Add new history entry for this doctor and patient
+        Doctor doctor = DoctorDAO.getDoctorByID(doctorID);
+        String hospital = (doctor != null && doctor.getHospital() != null) ? doctor.getHospital() : "Unknown";
+
+        //HistoryDAO.addHistoryRecord(patient.getID(), doctorID, patient.getCondition(), hospital);
+        HistoryDAO.replaceOrUpdateHistory(patient.getID(), doctorID, patient.getCondition(), hospital);
+    }
+    return updated;
+}
+
     
 
     // ---------------- Get Patient By ID ----------------

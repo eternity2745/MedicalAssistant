@@ -33,6 +33,35 @@ public class HistoryDAO {
             e.printStackTrace();
         }
     }
+    public static void replaceOrUpdateHistory(int patientID, int doctorID, String disease, String hospital) {
+    String checkSql = "SELECT patientID FROM history WHERE patientID= ?";
+    String updateSql = "UPDATE history SET doctorID=?, disease=?, hospital=? WHERE patientID=?";
+    String insertSql = "INSERT INTO history (patientID, doctorID, disease, hospital) VALUES (?, ?, ?, ?)";
+
+    try (Connection con = DatabaseConnection.getConnection()) {
+        var rs = con.prepareStatement(checkSql);
+        rs.setInt(1, patientID);
+        var resultSet = rs.executeQuery();
+        if (resultSet.next()) {
+            try (PreparedStatement ps = con.prepareStatement(updateSql)) {
+                ps.setInt(1, doctorID);
+                ps.setString(2, disease);
+                ps.setString(3, hospital);
+                ps.setInt(4, patientID);
+                ps.executeUpdate();
+            }
+        } else {
+            try (PreparedStatement ps = con.prepareStatement(insertSql)) {
+                ps.setInt(1, patientID);
+                ps.setInt(2, doctorID);
+                ps.setString(3, disease);
+                ps.setString(4, hospital);
+                ps.executeUpdate();
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }}
     
     public static List<History> getVisitHistoryByPatientID(int patientID) {
         List<History> visits = new ArrayList<>();

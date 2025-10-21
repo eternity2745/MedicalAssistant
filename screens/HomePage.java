@@ -53,6 +53,7 @@ public class HomePage extends JPanel {
         mainPanel.add(welcomeLabel);
         mainPanel.add(Box.createVerticalStrut(30));
 
+        // ----- Cards Panel -----
         JPanel cardsPanel = new JPanel();
         cardsPanel.setOpaque(false);
         cardsPanel.setLayout(new GridLayout(1, 4, 20, 0));
@@ -71,8 +72,6 @@ public class HomePage extends JPanel {
             card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
             card.setBorder(BorderFactory.createEmptyBorder(100, 20, 20, 20));
             card.setPreferredSize(new Dimension(200, 300));
-            cardsPanel.setLayout(new GridLayout(1, 4, 20, 0));
-            cardsPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 300));
 
             JLabel title = new JLabel(cardTitles[i]);
             title.setFont(new Font("Segoe UI", Font.PLAIN, 24));
@@ -94,6 +93,7 @@ public class HomePage extends JPanel {
         mainPanel.add(cardsPanel);
         mainPanel.add(Box.createVerticalStrut(30));
 
+        // ----- Recent Patients -----
         JLabel recentLabel = new JLabel("Recent Patients");
         recentLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
         recentLabel.setForeground(Color.WHITE);
@@ -110,7 +110,7 @@ public class HomePage extends JPanel {
             noPatientsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             mainPanel.add(noPatientsLabel);
         } else {
-            String[] columns = {"Name", "Age", "Gender", "Condition"};
+            String[] columns = {"Name", "Age", "Gender", "disease"};
             Object[][] data = recentPatients.toArray(new Object[0][]);
 
             DefaultTableModel model = new DefaultTableModel(data, columns) {
@@ -134,7 +134,8 @@ public class HomePage extends JPanel {
             table.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
             table.setShowGrid(true);
             table.setGridColor(Color.BLACK);
-            table.setPreferredScrollableViewportSize(new Dimension(600, table.getRowHeight() * Math.min(data.length, 5) + table.getTableHeader().getPreferredSize().height));
+            table.setPreferredScrollableViewportSize(new Dimension(600,
+                    table.getRowHeight() * Math.min(data.length, 5) + table.getTableHeader().getPreferredSize().height));
 
             JScrollPane tableScroll = new JScrollPane(table);
             tableScroll.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -143,6 +144,7 @@ public class HomePage extends JPanel {
 
         mainPanel.add(Box.createVerticalStrut(30));
 
+        // ----- Buttons -----
         JPanel buttonPanel = new JPanel();
         buttonPanel.setOpaque(false);
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 0));
@@ -152,10 +154,16 @@ public class HomePage extends JPanel {
         addPatientBtn.setFocusPainted(false);
         pendingRprtsBtn.setFocusPainted(false);
 
+        buttonPanel.add(addPatientBtn);
+        buttonPanel.add(pendingRprtsBtn);
+        mainPanel.add(buttonPanel);
+
+        // ----- Add Patient Button -----
         addPatientBtn.addActionListener(e -> {
             Color btnColor = new Color(58, 123, 213);
 
-            JDialog selectionDialog = new JDialog(SwingUtilities.getWindowAncestor(this), "Add Patient", Dialog.ModalityType.APPLICATION_MODAL);
+            JDialog selectionDialog = new JDialog(SwingUtilities.getWindowAncestor(this),
+                    "Add Patient", Dialog.ModalityType.APPLICATION_MODAL);
             selectionDialog.setSize(300, 150);
             selectionDialog.setLocationRelativeTo(this);
 
@@ -166,6 +174,12 @@ public class HomePage extends JPanel {
             JButton newPatientBtn = new JButton("New Patient");
             JButton existingPatientBtn = new JButton("Existing Patient");
 
+            // Add buttons to panel
+            selectionPanel.add(newPatientBtn);
+            selectionPanel.add(Box.createVerticalStrut(15));
+            selectionPanel.add(existingPatientBtn);
+
+            // Button styles
             newPatientBtn.setBackground(btnColor);
             newPatientBtn.setForeground(Color.WHITE);
             newPatientBtn.setFocusPainted(false);
@@ -176,10 +190,12 @@ public class HomePage extends JPanel {
             existingPatientBtn.setFocusPainted(false);
             existingPatientBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+            // ----- New Patient -----
             newPatientBtn.addActionListener(ev -> {
                 selectionDialog.dispose();
 
-                JDialog formDialog = new JDialog(SwingUtilities.getWindowAncestor(this), "Add New Patient", Dialog.ModalityType.APPLICATION_MODAL);
+                JDialog formDialog = new JDialog(SwingUtilities.getWindowAncestor(this),
+                        "Add New Patient", Dialog.ModalityType.APPLICATION_MODAL);
                 formDialog.setSize(400, 600);
                 formDialog.setLocationRelativeTo(this);
 
@@ -238,7 +254,8 @@ public class HomePage extends JPanel {
                         JOptionPane.showMessageDialog(formDialog, "✅ Patient added successfully!");
                         formDialog.dispose();
                     } else {
-                        JOptionPane.showMessageDialog(formDialog, "❌ Failed to add patient. Check for duplicate email or missing fields.");
+                        JOptionPane.showMessageDialog(formDialog,
+                                "❌ Failed to add patient. Check for duplicate email or missing fields.");
                     }
                 });
 
@@ -247,153 +264,150 @@ public class HomePage extends JPanel {
                 formDialog.setVisible(true);
             });
 
+            // ----- Existing Patient -----
+            existingPatientBtn.addActionListener(ev -> {
+                selectionDialog.dispose();
 
-    existingPatientBtn.addActionListener(ev -> {
-        selectionDialog.dispose();
+                JDialog searchDialog = new JDialog(SwingUtilities.getWindowAncestor(this),
+                        "Search Existing Patient", Dialog.ModalityType.APPLICATION_MODAL);
+                searchDialog.setSize(650, 500);
+                searchDialog.setLocationRelativeTo(this);
 
-        JDialog searchDialog = new JDialog(SwingUtilities.getWindowAncestor(this), "Search Existing Patient", Dialog.ModalityType.APPLICATION_MODAL);
-        searchDialog.setSize(650, 500);
-        searchDialog.setLocationRelativeTo(this);
+                JPanel panel = new JPanel();
+                panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+                // --- Search Section ---
+                JTextField searchField = new JTextField();
+                searchField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+                JButton searchBtn = new JButton("Search");
+                searchBtn.setBackground(new Color(58, 123, 213));
+                searchBtn.setForeground(Color.WHITE);
+                searchBtn.setFocusPainted(false);
+                searchBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // --- Search Section ---
-        JTextField searchField = new JTextField();
-        searchField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
-        JButton searchBtn = new JButton("Search");
-        searchBtn.setBackground(new Color(58, 123, 213));
-        searchBtn.setForeground(Color.WHITE);
-        searchBtn.setFocusPainted(false);
-        searchBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+                panel.add(new JLabel("Enter Patient Name or Email:"));
+                panel.add(searchField);
+                panel.add(Box.createVerticalStrut(10));
+                panel.add(searchBtn);
+                panel.add(Box.createVerticalStrut(20));
 
-        panel.add(new JLabel("Enter Patient Name or Email:"));
-        panel.add(searchField);
-        panel.add(Box.createVerticalStrut(10));
-        panel.add(searchBtn);
-        panel.add(Box.createVerticalStrut(20));
+                // --- Table Section ---
+                String[] searchColumns = {"ID", "Name", "Age", "Gender", "Medications", "disease"};
+                searchTableModel = new DefaultTableModel(searchColumns, 0) {
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                };
+                searchTable = new JTable(searchTableModel);
+                searchTable.setRowHeight(25);
+                searchTable.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+                JScrollPane searchTableScroll = new JScrollPane(searchTable);
+                searchTableScroll.setPreferredSize(new Dimension(600, 200));
+                panel.add(searchTableScroll);
+                panel.add(Box.createVerticalStrut(20));
 
-        // --- Table Section ---
-        String[] searchColumns = {"ID", "Name", "Age", "Gender", "Medications", "Condition"};
-        searchTableModel = new DefaultTableModel(searchColumns, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        searchTable = new JTable(searchTableModel);
-        searchTable.setRowHeight(25);
-        searchTable.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        JScrollPane searchTableScroll = new JScrollPane(searchTable);
-        searchTableScroll.setPreferredSize(new Dimension(600, 200));
-        panel.add(searchTableScroll);
-        panel.add(Box.createVerticalStrut(20));
+                // --- Update Section ---
+                JPanel updatePanel = new JPanel();
+                updatePanel.setLayout(new BoxLayout(updatePanel, BoxLayout.Y_AXIS));
+                updatePanel.setBorder(BorderFactory.createTitledBorder("Update Selected Patient"));
+                updatePanel.setVisible(false);
 
-        // --- Update Section ---
-        JPanel updatePanel = new JPanel();
-        updatePanel.setLayout(new BoxLayout(updatePanel, BoxLayout.Y_AXIS));
-        updatePanel.setBorder(BorderFactory.createTitledBorder("Update Selected Patient"));
-        updatePanel.setVisible(false);
+                JTextField ageUpdateField = new JTextField();
+                JTextField medicationUpdateField = new JTextField();
+                JTextField diseaseUpdateField = new JTextField();
 
-        JTextField ageUpdateField = new JTextField();
-        JTextField medicationUpdateField = new JTextField();
-        JTextField diseaseUpdateField = new JTextField();
+                ageUpdateField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+                medicationUpdateField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+                diseaseUpdateField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
 
-        ageUpdateField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
-        medicationUpdateField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
-        diseaseUpdateField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+                updatePanel.add(new JLabel("Update Age:"));
+                updatePanel.add(ageUpdateField);
+                updatePanel.add(Box.createVerticalStrut(10));
 
-        updatePanel.add(new JLabel("Update Age:"));
-        updatePanel.add(ageUpdateField);
-        updatePanel.add(Box.createVerticalStrut(10));
+                updatePanel.add(new JLabel("Update Medications:"));
+                updatePanel.add(medicationUpdateField);
+                updatePanel.add(Box.createVerticalStrut(10));
 
-        updatePanel.add(new JLabel("Update Medications:"));
-        updatePanel.add(medicationUpdateField);
-        updatePanel.add(Box.createVerticalStrut(10));
+                updatePanel.add(new JLabel("Update Disease:"));
+                updatePanel.add(diseaseUpdateField);
+                updatePanel.add(Box.createVerticalStrut(20));
 
-        updatePanel.add(new JLabel("Update Disease:"));
-        updatePanel.add(diseaseUpdateField);
-        updatePanel.add(Box.createVerticalStrut(20));
+                JButton updateBtn = new JButton("Update Patient");
+                updateBtn.setBackground(new Color(58, 123, 213));
+                updateBtn.setForeground(Color.WHITE);
+                updateBtn.setFocusPainted(false);
+                updateBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+                updatePanel.add(updateBtn);
 
-        JButton updateBtn = new JButton("Update Patient");
-        updateBtn.setBackground(new Color(58, 123, 213));
-        updateBtn.setForeground(Color.WHITE);
-        updateBtn.setFocusPainted(false);
-        updateBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        updatePanel.add(updateBtn);
+                panel.add(updatePanel);
 
-        panel.add(updatePanel);
+                // ----- Search Action -----
+                searchBtn.addActionListener(ev2 -> {
+                    String keyword = searchField.getText().trim();
+                    searchTableModel.setRowCount(0);
+                    if (!keyword.isEmpty()) {
+                        List<Patient> results = PatientDAO.searchPatients(keyword);
+                        for (Patient p : results) {
+                            searchTableModel.addRow(new Object[]{
+                                    p.getID(),
+                                    p.getName(),
+                                    p.getAge(),
+                                    p.getGender(),
+                                    p.getMedications(),
+                                    p.getCondition()
+                            });
+                        }
+                        if (results.isEmpty()) {
+                            JOptionPane.showMessageDialog(searchDialog, "No patients found.");
+                        } else {
+                            updatePanel.setVisible(false);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(searchDialog, "Please enter a name or email to search.");
+                    }
+                });
 
-        // ----- Search Action -----
-        searchBtn.addActionListener(ev2 -> {
-            String keyword = searchField.getText().trim();
-            searchTableModel.setRowCount(0);
-            if (!keyword.isEmpty()) {
-                List<Patient> results = PatientDAO.searchPatients(keyword);
-                for (Patient p : results) {
-                    searchTableModel.addRow(new Object[]{
-                            p.getID(),
-                            p.getName(),
-                            p.getAge(),
-                            p.getGender(),
-                            p.getMedications(),
-                            p.getCondition()
-                    });
-                }
-                if (results.isEmpty()) {
-                    JOptionPane.showMessageDialog(searchDialog, "No patients found.");
-                } else {
-                    updatePanel.setVisible(false);
-                }
-            } else {
-                JOptionPane.showMessageDialog(searchDialog, "Please enter a name or email to search.");
-            }
-        });
+                // Show update panel when row selected
+                searchTable.getSelectionModel().addListSelectionListener(selevt -> {
+                    if (!selevt.getValueIsAdjusting() && searchTable.getSelectedRow() != -1) {
+                        updatePanel.setVisible(true);
+                    }
+                });
 
-        searchTable.getSelectionModel().addListSelectionListener(selevt -> {
-            if (!selevt.getValueIsAdjusting() && searchTable.getSelectedRow() != -1) {
-                updatePanel.setVisible(true);
-            }
-        });
+                // ----- Update Action -----
+                updateBtn.addActionListener(ev3 -> {
+                    int selectedRow = searchTable.getSelectedRow();
+                    if (selectedRow == -1) {
+                        JOptionPane.showMessageDialog(searchDialog, "Please select a patient from the table.");
+                        return;
+                    }
 
-        // ----- Update Action -----
-        updateBtn.addActionListener(ev3 -> {
-            int selectedRow = searchTable.getSelectedRow();
-            if (selectedRow == -1) {
-                JOptionPane.showMessageDialog(searchDialog, "Please select a patient from the table.");
-                return;
-            }
+                    int patientID = (int) searchTableModel.getValueAt(selectedRow, 0);
+                    String newAge = ageUpdateField.getText().trim();
+                    String newMedications = medicationUpdateField.getText().trim();
+                    String newDisease = diseaseUpdateField.getText().trim();
 
-            int patientID = (int) searchTableModel.getValueAt(selectedRow, 0);
-            String newAge = ageUpdateField.getText().trim();
-            String newMedications = medicationUpdateField.getText().trim();
-            String newDisease = diseaseUpdateField.getText().trim();
+                    Patient patient = PatientDAO.getPatientByID(patientID);
+                    if (!newAge.isEmpty()) patient.setAge(Integer.parseInt(newAge));
+                    if (!newMedications.isEmpty()) patient.setMedications(newMedications);
+                    if (!newDisease.isEmpty()) patient.setCondition(newDisease);
 
-            Patient patient = PatientDAO.getPatientByID(patientID);
-            if (!newAge.isEmpty()) patient.setAge(Integer.parseInt(newAge));
-            if (!newMedications.isEmpty()) patient.setMedications(newMedications);
-            if (!newDisease.isEmpty()) patient.setCondition(newDisease);
+                    boolean success = PatientDAO.updatePatientWithHistory(patient, doctor.getID());
+                    if (success) {
+                        JOptionPane.showMessageDialog(searchDialog, "✅ Patient updated successfully and history added!");
+                        searchTableModel.setValueAt(patient.getAge(), selectedRow, 2);
+                        searchTableModel.setValueAt(patient.getMedications(), selectedRow, 4);
+                        searchTableModel.setValueAt(patient.getCondition(), selectedRow, 5);
+                    } else {
+                        JOptionPane.showMessageDialog(searchDialog, "❌ Failed to update patient.");
+                    }
+                });
 
-            boolean success = PatientDAO.updatePatient(patient);
-            if (success) {
-                JOptionPane.showMessageDialog(searchDialog, "✅ Patient updated successfully!");
-                searchTableModel.setValueAt(patient.getAge(), selectedRow, 2);
-                searchTableModel.setValueAt(patient.getMedications(), selectedRow, 4);
-                searchTableModel.setValueAt(patient.getCondition(), selectedRow, 5);
-            } else {
-                JOptionPane.showMessageDialog(searchDialog, "❌ Failed to update patient.");
-            }
-        });
-
-        searchDialog.setContentPane(panel);
-        searchDialog.setVisible(true);
-    });
-
-
-            selectionPanel.add(newPatientBtn);
-            selectionPanel.add(Box.createVerticalStrut(15));
-            selectionPanel.add(existingPatientBtn);
+                searchDialog.setContentPane(panel);
+                searchDialog.setVisible(true);
+            });
 
             selectionDialog.setContentPane(selectionPanel);
             selectionDialog.setVisible(true);
@@ -426,3 +440,4 @@ public class HomePage extends JPanel {
         return panel;
     }
 }
+
