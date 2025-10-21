@@ -236,8 +236,8 @@ public class PatientDAO {
         Doctor doctor = DoctorDAO.getDoctorByID(doctorID);
         String hospital = (doctor != null && doctor.getHospital() != null) ? doctor.getHospital() : "Unknown";
 
-        //HistoryDAO.addHistoryRecord(patient.getID(), doctorID, patient.getCondition(), hospital);
-        HistoryDAO.replaceOrUpdateHistory(patient.getID(), doctorID, patient.getCondition(), hospital);
+        HistoryDAO.addHistoryRecord(patient.getID(), doctorID, patient.getCondition(), hospital);
+        // HistoryDAO.replaceOrUpdateHistory(patient.getID(), doctorID, patient.getCondition(), hospital);
     }
     return updated;
 }
