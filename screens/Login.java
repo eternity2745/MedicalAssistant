@@ -37,7 +37,6 @@ public class Login extends JPanel {
         setLayout(new BorderLayout());
         setOpaque(false);
 
-        // ----- Login Card Panel -----
         JPanel loginPanel = new JPanel(new GridBagLayout());
         loginPanel.setOpaque(true);
         loginPanel.setBackground(new Color(255, 255, 255, 230));

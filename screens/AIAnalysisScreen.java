@@ -79,7 +79,7 @@ public class AIAnalysisScreen extends JPanel {
         gradientPanel.add(patientIdField);
         gradientPanel.add(Box.createVerticalStrut(20));
 
-        // ----- Symptoms input -----
+
         JLabel symptomsLabel = new JLabel("Patient Symptoms:");
         symptomsLabel.setForeground(Color.WHITE);
         symptomsLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));

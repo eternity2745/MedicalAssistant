@@ -13,7 +13,7 @@ import utilities.History;
 
 public class HistoryDAO {
 
-    // --- Insert new history record when patient is registered ---
+
     public static void addHistoryRecord(int patientID, int doctorID, String disease, String hospital) {
         String query = "INSERT INTO history (patientID, doctorID, date, disease, hospital, completed) VALUES (?, ?, ?, ?, ?, ?)";
 

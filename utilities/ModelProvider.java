@@ -9,7 +9,7 @@ public class ModelProvider {
 
     public static GoogleAiGeminiChatModel getModel() {
         if (model == null) {
-            Dotenv dotenv = Dotenv.load(); // Loads from root .env
+            Dotenv dotenv = Dotenv.load();
             String apiKey = dotenv.get("GEMINI_API_KEY");
 
             if (apiKey == null || apiKey.isEmpty()) {
@@ -18,8 +18,8 @@ public class ModelProvider {
 
             model = GoogleAiGeminiChatModel.builder()
                     .apiKey(apiKey)
-                    .modelName("gemini-2.5-flash") // Use your desired Gemini version
-                    .temperature(0.7) // Optional: controls creativity
+                    .modelName("gemini-2.5-flash")
+                    .temperature(0.7)
                     .build();
         }
         return model;

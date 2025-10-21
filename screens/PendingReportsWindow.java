@@ -34,13 +34,11 @@ public class PendingReportsWindow extends JFrame {
         getContentPane().setBackground(new Color(15, 25, 50));
         setLayout(new BorderLayout(10, 10));
 
-        // 🔹 Title
         JLabel title = new JLabel("Pending Reports", SwingConstants.CENTER);
         title.setFont(new Font("Segoe UI", Font.BOLD, 26));
         title.setForeground(Color.WHITE);
         add(title, BorderLayout.NORTH);
 
-        // 🔹 Search Panel
         JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         searchPanel.setOpaque(false);
         searchField = new JTextField(25);
@@ -59,12 +57,10 @@ public class PendingReportsWindow extends JFrame {
         searchPanel.add(refreshBtn);
         add(searchPanel, BorderLayout.BEFORE_FIRST_LINE);
 
-        // 🔹 Table
         String[] columns = {"Patient ID", "Doctor ID", "Disease", "Hospital", "Date", "Completed"};
         tableModel = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                // Allow editing only in the Completed column
                 return column == 5;
             }
         };
@@ -80,7 +76,6 @@ public class PendingReportsWindow extends JFrame {
         scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         add(scrollPane, BorderLayout.CENTER);
 
-        // 🔹 Bottom Button
         JButton submitBtn = new JButton("Mark as Completed");
         submitBtn.setFont(new Font("Segoe UI", Font.BOLD, 16));
         submitBtn.setBackground(new Color(0, 150, 100));
@@ -93,13 +88,11 @@ public class PendingReportsWindow extends JFrame {
         bottomPanel.add(submitBtn);
         add(bottomPanel, BorderLayout.SOUTH);
 
-        // Load Data
         loadPendingReports();
 
         setVisible(true);
     }
 
-    // 🔹 Load all pending reports (completed = F)
     private void loadPendingReports() {
         tableModel.setRowCount(0);
         List<History> pendingReports = HistoryDAO.getPendingReports();
@@ -120,7 +113,6 @@ public class PendingReportsWindow extends JFrame {
         }
     }
 
-    // 🔹 Search reports by patient ID
     private void searchReports() {
         String keyword = searchField.getText().trim();
         if (keyword.isEmpty()) {
@@ -147,7 +139,6 @@ public class PendingReportsWindow extends JFrame {
         }
     }
 
-    // 🔹 Mark selected rows as completed
     private void markAsCompleted() {
         int[] selectedRows = reportsTable.getSelectedRows();
 

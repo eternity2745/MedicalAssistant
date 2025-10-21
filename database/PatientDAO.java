@@ -14,7 +14,6 @@ import utilities.Patient;
 public class PatientDAO {
     
 
-    // ---------------- Register Patient ----------------
     public static boolean registerPatient(Patient patient) {
         String query = "INSERT INTO patients (id, name, age, profilePic, email, gender, dob, phone, allergies, medications, bloodGroup, disease, address) "
                      + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -55,8 +54,6 @@ public class PatientDAO {
         }
     }
 
-    // --- Overloaded version (doctor + patient) ---
-    // --- Overloaded version (doctor + patient) ---
     public static boolean registerPatientHistory(Patient patient, int doctorID) {
         boolean registered = registerPatient(patient);
         if (registered) {
@@ -74,9 +71,6 @@ public class PatientDAO {
     }
 
     
-
-
-    // ---------------- Search Patients ----------------
     public static java.util.List<Patient> searchPatients(String keyword) {
         java.util.List<Patient> patients = new java.util.ArrayList<>();
         String query = "SELECT * FROM patients WHERE name LIKE ? OR email LIKE ?";
@@ -232,7 +226,7 @@ public class PatientDAO {
     public static boolean updatePatientWithHistory(Patient patient, int doctorID) {
     boolean updated = updatePatient(patient);
     if (updated) {
-        // Add new history entry for this doctor and patient
+        
         Doctor doctor = DoctorDAO.getDoctorByID(doctorID);
         String hospital = (doctor != null && doctor.getHospital() != null) ? doctor.getHospital() : "Unknown";
 

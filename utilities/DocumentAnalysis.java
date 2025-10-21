@@ -23,7 +23,6 @@ public class DocumentAnalysis implements AIAnalyzer {
             File pdfFile = new File(filePath);
             if (!pdfFile.exists()) return "File not found: " + filePath;
 
-            // Convert PDF to Base64
             String base64Pdf = PDFUtils.encodePdfToBase64(pdfFile);
 
             String prompt = """

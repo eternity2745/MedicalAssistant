@@ -14,7 +14,7 @@ public class DatabaseConnection {
 
     public static Connection getConnection() {
         try {
-            // If no connection OR if the connection was closed, create a new one
+            
             if (connection == null || connection.isClosed()) {
 
                 if (dotenv == null) {
@@ -27,7 +27,7 @@ public class DatabaseConnection {
                 String port = dotenv.get("SQL_PORT");
 
                 String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
-                String user = dbName; // In FreeSQLDatabase, username = dbName
+                String user = dbName;
 
                 connection = DriverManager.getConnection(url, user, password);
                 System.out.println("✅ Connected to database successfully at " + host);

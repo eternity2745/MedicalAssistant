@@ -42,7 +42,6 @@ public class Dashboard extends JPanel {
         profileScreen = new ProfileScreen();
         aiAnalysisScreen = new AIAnalysisScreen();
 
-        // ----- Left Navigation Panel -----
         JPanel navPanel = new JPanel();
         navPanel.setLayout(new BoxLayout(navPanel, BoxLayout.Y_AXIS));
         navPanel.setBackground(new Color(10, 25, 70));
@@ -99,7 +98,6 @@ public class Dashboard extends JPanel {
 
         add(navPanel, BorderLayout.WEST);
 
-        // ----- Right Content Panel -----
         contentPanel = new GradientPanel(new Color(10, 25, 70), new Color(30, 50, 100));
         contentPanel.setLayout(new BorderLayout());
         add(contentPanel, BorderLayout.CENTER);
@@ -107,7 +105,6 @@ public class Dashboard extends JPanel {
         showHome();
     }
 
-    // ----- Switch screens in contentPanel -----
     public void switchScreen(String screen) {
         contentPanel.removeAll();
         switch(screen) {
@@ -120,7 +117,6 @@ public class Dashboard extends JPanel {
         contentPanel.repaint();
     }
 
-    // ----- Screen Methods -----
     private void showHome() {
         switchScreen("Home");
     }

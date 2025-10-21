@@ -40,8 +40,6 @@ public class ImageAnalysis implements AIAnalyzer {
                     Provide your answer clearly and concisely.
                     """;
 
-            // Wrap Base64 image in a pseudo-message if needed
-            // (LangChain4j may support ImageFileContent in future)
 
             ChatResponse response = model.chat(
                 UserMessage.from(

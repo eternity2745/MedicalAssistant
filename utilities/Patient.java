@@ -8,7 +8,7 @@ public class Patient implements User {
     private String profilePic;
     private String email;
     private String gender;
-    private String dob;        // YYYY-MM-DD
+    private String dob; 
     private String phone;
     private String allergies;
     private String medications;
@@ -16,7 +16,6 @@ public class Patient implements User {
     private String condition;
     private String address;
 
-    // Getters and Setters
     @Override
     public int getID() { return ID; }
     @Override

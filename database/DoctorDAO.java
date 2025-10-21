@@ -65,10 +65,9 @@ public class DoctorDAO {
                 doctor.setTotalPatients(getTotalPatients(conn, rs.getInt("id")));
                 doctor.setPending(getPendingReports(conn, rs.getInt("id")));
                 doctor.setAppointments(getTodaysAppointments(conn, rs.getInt("id")));
-                // Add other fields if any
                 return doctor;
             }
-            return null; // returns true if a match is found
+            return null;
 
         } catch (SQLException e) {
             e.printStackTrace();
