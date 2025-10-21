@@ -1,6 +1,6 @@
 package utilities;
 
-public class Patient {
+public class Patient implements User {
 
     private int ID;
     private String name;
@@ -17,19 +17,27 @@ public class Patient {
     private String address;
 
     // Getters and Setters
+    @Override
     public int getID() { return ID; }
+    @Override
     public void setID(int ID) { this.ID = ID; }
 
+    @Override
     public String getName() { return name; }
+    @Override
     public void setName(String name) { this.name = name; }
 
     public int getAge() { return age; }
     public void setAge(int age) { this.age = age; }
 
+    @Override
     public String getProfilePic() { return profilePic; }
+    @Override
     public void setProfilePic(String profilePic) { this.profilePic = profilePic; }
 
+    @Override
     public String getEmail() { return email; }
+    @Override
     public void setEmail(String email) { this.email = email; }
 
     public String getGender() { return gender; }

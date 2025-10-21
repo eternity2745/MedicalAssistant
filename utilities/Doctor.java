@@ -23,8 +23,9 @@ public class Doctor implements User {
         this.specialization = specialization;
     }
 
+    @Override
     public int getID() {return id ;}
-
+    @Override
     public void setID(int id) {this.id = id;}
 
     public void setTotalPatients(int totalPatients) {this.totalPatients = totalPatients;}
@@ -33,6 +34,7 @@ public class Doctor implements User {
 
     public void setPending(int pending) {this.pending = pending;}
 
+    @Override
     public void setProfilePic(String profilePic) {this.profilePic = profilePic;}
 
     public void setAIAnalysis(int AIAnalysis) { this.AIAnalysis = AIAnalysis; }
@@ -45,10 +47,19 @@ public class Doctor implements User {
 
     @Override
     public String getName() { return name; }
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    };
 
     @Override
     public String getEmail() { return email; }
+    @Override
+    public void setEmail(String email) {
+        this.email = email;
+    };
 
+    @Override
     public String getProfilePic() { return profilePic; }
 
     public String getPhone() {return phoneNumber ;}
@@ -61,23 +72,4 @@ public class Doctor implements User {
 
     public int getAIAnalysis() { return AIAnalysis; }
 
-    @Override
-    public void viewProfile() {
-        System.out.println("Doctor Profile");
-        System.out.println("ID: " + id);
-        System.out.println("Name: " + name);
-        System.out.println("Email: " + email);
-        System.out.println("Specialization: " + specialization);
-    }
-
-    @Override
-    public void updateProfile(String newName, String newEmail) {
-        this.name = newName;
-        this.email = newEmail;
-        System.out.println("Doctor profile updated successfully.");
-    }
-
-    public void viewPatients() {
-        System.out.println("Viewing patients assigned to Dr. " + name);
-    }
 }
